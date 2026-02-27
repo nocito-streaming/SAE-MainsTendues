@@ -1,0 +1,57 @@
+        /* Réinitialisation de base */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        /* Style du header */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Faux logo pour habiller la gauche */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        /* Style de la navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Espace entre les liens */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        /* Mise en valeur du bouton d'inscription */
+        nav a.btn-signup {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a.btn-signup:hover {
+            background-color: #2980b9;
+            color: #ffffff;
+        }

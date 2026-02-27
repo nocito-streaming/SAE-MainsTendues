@@ -16,7 +16,7 @@ if ($page === 'admin' && !$isAdmin) {
     header('Location: index.php?page=login');
     exit;
 }
-
+echo "hello world";
 // 4. Construction du chemin
 $filepath = $dirPages . $page . '.php';
 

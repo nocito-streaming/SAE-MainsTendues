@@ -7,6 +7,14 @@
     <link href="./header.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="./../images/logo.png" alt="Logo Mains Tendues" class="logo-img"/>
+            <div class="logo-text">
+                <h1>Mains Tendues</h1>
+                <p>Main dans la main, pour un meilleur demain</p>
+            </div>
+        </div>
 
         <nav>
             <a href="index.php?page=home">Accueil</a>

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plateforme d'Entraide</title>
-    <link href="./header.css" rel="stylesheet" type="text/css"/>
+    <link href="./src/commons/header.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <header class="main-header">
         <div class="logo-container">
-            <img src="./../images/logo.png" alt="Logo Mains Tendues" class="logo-img"/>
+            <img src="./Images/logo.png" alt="Logo Mains Tendues" class="logo-img"/>
             <div class="logo-text">
                 <h1>Mains Tendues</h1>
                 <p>Main dans la main, pour un meilleur demain</p>

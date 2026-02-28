@@ -1,0 +1,67 @@
+/* HEADER GLOBAL */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #2E86C1, #28B463);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* LOGO + TEXTE */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 60px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.logo-text h1 {
+    margin: 0;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo-text p {
+    margin: 0;
+    font-size: 13px;
+    color: #eafaf1;
+    font-style: italic;
+}
+
+/* NAVIGATION */
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+nav a:hover {
+    color: #d4efdf;
+}
+
+/* BOUTON INSCRIPTION */
+.btn-signup {
+    background-color: white;
+    color: #2E86C1 !important;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.btn-signup:hover {
+    background-color: #f2f2f2;
+}

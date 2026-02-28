@@ -8,9 +8,6 @@
 </head>
 <body>
 
-    <header>
-        <img src="./../images/logo.png"/>
-        <a href="index.php?page=home" class="logo">EntraideLogo</a>
         <nav>
             <a href="index.php?page=home">Accueil</a>
             <a href="index.php?page=requestHelp">Demander de l'aide</a>

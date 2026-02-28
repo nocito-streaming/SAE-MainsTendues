@@ -9,7 +9,7 @@
 <body>
     <header class="main-header">
         <div class="logo-container">
-            <img src="./../images/logo.png" alt="Logo Mains Tendues" class="logo-img"/>
+            <img src="./../Images/logo.png" alt="Logo Mains Tendues" class="logo-img"/>
             <div class="logo-text">
                 <h1>Mains Tendues</h1>
                 <p>Main dans la main, pour un meilleur demain</p>

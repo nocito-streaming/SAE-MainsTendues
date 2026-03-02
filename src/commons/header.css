@@ -1,4 +1,3 @@
-/* HEADER GLOBAL */
 .main-header {
     display: flex;
     justify-content: space-between;
@@ -9,7 +8,6 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* LOGO + TEXTE */
 .logo-container {
     display: flex;
     align-items: center;
@@ -34,8 +32,7 @@
     color: #eafaf1;
     font-style: italic;
 }
-
-/* NAVIGATION */
+    
 nav {
     display: flex;
     align-items: center;
@@ -53,7 +50,6 @@ nav a:hover {
     color: #d4efdf;
 }
 
-/* BOUTON INSCRIPTION */
 .btn-signup {
     background-color: white;
     color: #2E86C1 !important;

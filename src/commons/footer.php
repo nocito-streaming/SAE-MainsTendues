@@ -10,17 +10,15 @@
         <footer class="main-footer">
             <div class="footer-container">
 
-                <!-- Présentation -->
                 <div class="footer-about">
                     <h3>MainsTendues</h3>
                     <p>
-                        Plateforme solidaire mettant en relation des personnes âgées 
-                        ou en situation de handicap avec des bénévoles engagés.
-                        Ensemble, renforçons le lien social et l'entraide citoyenne.
+                        Plateforme solidaire reliant bénévoles et personnes ayant besoin
+                        d'aide au quotidien. Ensemble, créons plus de solidarité et
+                        renforçons le lien social.
                     </p>
                 </div>
 
-                <!-- Navigation -->
                 <div class="footer-links">
                     <h4>Navigation</h4>
                     <ul>
@@ -31,24 +29,28 @@
                     </ul>
                 </div>
 
-                <!-- Engagement -->
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p>Email : contact@mainstendues.fr</p>
+                    <p>Téléphone : 06 00 00 00 00</p>
+                    <p>Pau, France</p>
+                </div>
+
                 <div class="footer-engagement">
                     <h4>Notre engagement</h4>
                     <p>
-                        Projet à but non lucratif favorisant la cohésion sociale,
-                        l'inclusion et la réduction des inégalités.
+                        Plateforme associative favorisant l'inclusion sociale
+                        et la solidarité intergénérationnelle.
                     </p>
                     <p class="odd">
-                        Objectif de Développement Durable n°10 : 
-                        <strong>Réduction des inégalités</strong>
+                        ODD n°10 : <strong>Réduction des inégalités</strong>
                     </p>
                 </div>
 
             </div>
 
-            <!-- Bas de footer -->
             <div class="footer-bottom">
-                <p>© 2026 MainsTendues — Plateforme solidaire et gratuite</p>
+                <p>© 2026 MainsTendues — Plateforme solidaire gratuite</p>
             </div>
         </footer>
     </body>

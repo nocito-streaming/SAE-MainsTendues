@@ -1,9 +1,8 @@
 main {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
     background-color: #ffffff;
+    padding: 40px 0;
 }  
 
 .signup-form {
@@ -15,9 +14,46 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.signup-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.field input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.signup-form label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.signup-form input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .btn {  
+    margin-top: 20px;
     background-color: #28B463;
     color: white;
+    width: 100%;
     padding: 10px 20px;
     border: none;
     justify-content: center;
@@ -32,19 +68,28 @@ main {
 }
 
 
-.signup-form p {
+.signup-form p:first-of-type {
     align-self: flex-start;
     margin-bottom: 20px;
     color: #2c3e50;
 }
 
 .login-link {
+    text-align: center;
     margin-top: 15px;
     color: #2c3e50;
+    align-self: center;
+    text-align: center;
 }
 
 .login-link a {
     color: #28B463;
     text-decoration: none;
     font-weight: bold;
+}
+
+input:focus {
+    outline: none;
+    border-color: #28B463;
+    box-shadow: 0 0 5px rgba(40, 180, 99, 0.5);
 }

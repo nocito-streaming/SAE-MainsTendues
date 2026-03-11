@@ -26,7 +26,7 @@
                     <label for="email">Adresse e-mail :</label>
                     <input type="email" id="email" name="email" required placeholder="votre@email.com">
                     <label for="tel">Numéro de téléphone :</label>
-                    <input type="tel" id="tel" name="tel" required placeholder="07 68 79 80 90">
+                    <input type="tel" id="tel" name="tel" placeholder="07 68 79 80 90">
                     <label for="password">Mot de passe :</label>            
                     <input type="password" id="password" name="password" required placeholder="········">
                     <label for="confirm">Confirmer le mot de passe :</label>

@@ -47,7 +47,8 @@ header nav a {
 }
 
 nav a:hover {
-    color: #d4efdf;
+    color: #00f261;
+    font-size: 20px;
 }
 
 .btn-signup {

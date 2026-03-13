@@ -19,10 +19,10 @@
 }
 
 main {
-    flex: 1; /* Permet au main de prendre toute la hauteur disponible entre le header et le footer */
+    flex: 1;
     display: flex;
-    justify-content: center; /* Centre les éléments HORIZONTALEMENT */
-    align-items: center;     /* <-- LA LIGNE MAGIQUE POUR CENTRER VERTICALEMENT */
+    justify-content: center;
+    align-items: center;
     background-color: #ffffff;
     padding: 40px 0;
 }

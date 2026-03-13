@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Address;
 
+-- creation
 CREATE TABLE Address (
                          idAdr INT AUTO_INCREMENT PRIMARY KEY,
                          city VARCHAR(100) NOT NULL,

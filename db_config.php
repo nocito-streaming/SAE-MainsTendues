@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db_name = 'MainsTendues';  // PROBABLY CHANGE
 $username = 'etudiant';       // CHANGE
-$password = 'IsaNum1';           // CHANGE
+$password = 'Isanum!';           // CHANGE
 
 try {
     $db = new PDO(

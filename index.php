@@ -1,6 +1,10 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
 // 1. Configuration et variables
-$dirPages = 'src/pages/';
+$dirPages = './src/pages/';
 $rawPage = $_GET['page'] ?? 'home'; // "home" par défaut selon ta liste
 
 // 2. Nettoyage de sécurité (Regex)
@@ -22,8 +26,8 @@ $filepath = $dirPages . $page . '.php';
 // Structure de chaque page
 
 // Le Header (Menu, CSS, etc.)
-if (file_exists('src/commons/header.php')) {
-    include 'src/commons/header.php';
+if (file_exists('./src/commons/header.php')) {
+    include './src/commons/header.php';
 }
 
 // Le Corps de la page (Dynamique)
@@ -33,3 +37,4 @@ if (file_exists($filepath)) {
     // Si la page n'existe pas, on affiche la home
     include $dirPages . 'home.php';
 }
+?>

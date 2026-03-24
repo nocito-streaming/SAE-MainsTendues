@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$db_name = 'MainsTendues';  // PROBABLY CHANGE
-$username = 'etudiant';       // CHANGE
-$password = 'Isanum!';           // CHANGE
+$db_name = 'MainsTendues';
+$username = 'etudiant';
+$password = 'Isanum!';
 
 try {
     $db = new PDO(

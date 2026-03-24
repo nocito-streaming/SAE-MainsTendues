@@ -1,3 +1,22 @@
+<?php
+require_once  './src/db_config.php';
+require_once  './src/auth.php';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"] ?? '';
+    $password = $_POST["password"] ?? '';
+    if (login_user($email, $password)) {
+        ?>
+        <script type="text/javascript" >
+            window.location.href = "index.php?page=profile"
+        </script>
+        <?php
+        die();
+    }
+    else {
+        $error = "Email ou mot de passe incorrecte";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
     <head>

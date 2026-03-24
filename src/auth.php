@@ -2,7 +2,7 @@
 function login_user($email, $password){
     global $db;
 
-    $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
+    $stmt = $db->prepare("SELECT * FROM User WHERE email = :email");
     $stmt->execute(["email" => $email]);
     $user = $stmt->fetch();
     if($user && password_verify($password, $user['pwdHash'])){
@@ -28,4 +28,41 @@ function logout_user(){
     }
     session_destroy();
     $_SESSION = [];
+}
+function register_user($fName,$sName, $email, $password, $tel = null){
+    global $db ;
+    $stmt = $db -> prepare("SELECT * FROM User WHERE email = :email");
+    $stmt->execute(["email" => $email]);
+    $user = $stmt->fetch();
+    if($user){
+        return "Utilisateur avec cette email existe deja ";
+    }
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    try {
+        $db->beginTransaction();
+
+        // 2. Insertion dans la table User (Base)
+        $stmt = $db->prepare("INSERT INTO User (email, pwdHash) VALUES (:email, :pwdHash)");
+        $stmt->execute([
+            "email" => $email,
+            "pwdHash" => $hashed_password
+        ]);
+
+        $userId = $db->lastInsertId();
+
+        $stmt = $db->prepare("INSERT INTO defUser (user_id, fName, sName, tel, idAdr) 
+                              VALUES (:user_id, :fName, :sName, :tel, 1)");
+        $stmt->execute([
+            "user_id" => $userId,
+            "fName" => $fName,
+            "sName" => $sName,
+            "tel" => $tel
+        ]);
+
+        $db->commit();
+        return true;
+    } catch (Exception $e) {
+        $db->rollBack();
+        return "Erreur lors de l'enregistrement : " . $e->getMessage();
+    }
 }

@@ -12,10 +12,10 @@ DROP TABLE IF EXISTS Address;
 -- creation
 CREATE TABLE Address (
                          idAdr INT AUTO_INCREMENT PRIMARY KEY,
-                         city VARCHAR(100) NOT NULL,
-                         postalCode VARCHAR(20) NOT NULL,
-                         street VARCHAR(255) NOT NULL,
-                         homeN VARCHAR(10) NOT NULL
+                         city VARCHAR(100),
+                         postalCode VARCHAR(20),
+                         street VARCHAR(255),
+                         homeN VARCHAR(10)
 );
 
 CREATE TABLE User (
@@ -88,3 +88,5 @@ CREATE TABLE Report (
                         FOREIGN KEY (creator_id) REFERENCES defUser(user_id),
                         FOREIGN KEY (admin_id) REFERENCES Admin(user_id)
 );
+#CREATION OF DEFAULT ADDRESS SET TO ALL USERS WHO HAVEN'T SUBMITTED IT YET
+INSERT INTO Address VALUES (1 , NULL , NULL , NULL , NULL )

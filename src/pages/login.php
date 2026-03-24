@@ -17,6 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+<!-- TO SHOW THE ERRORS DURING DÉVELOPPEMENT. DELETE IT-->
+<?php if (isset($error)): ?>
+    <p style="color: red;"><?php echo $error; ?></p>
+<?php endif; ?>
+<!-- TO SHOW THE ERRORS DURING DÉVELOPPEMENT. DELETE IT-->
+
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -36,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <nav class="signup-form">
                 <h2>Se connecter</h2>
                 <p class="form-description">Connectez-vous à votre compte MainsTendues:</p>
-                <form action="index.php?page=signUp" method="post">
+                <form action="index.php?page=login" method="post">
                     <label for="email">Adresse e-mail :</label>
                     <input type="email" id="email" name="email" required placeholder="votre@email.com">
                     <label for="password">Mot de passe :</label>            

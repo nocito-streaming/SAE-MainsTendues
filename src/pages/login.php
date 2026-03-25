@@ -5,16 +5,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"] ?? '';
     $password = $_POST["password"] ?? '';
     if (login_user($email, $password)) {
-        ?>
-        <script type="text/javascript" >
-            window.location.href = "index.php?page=profile"
-        </script>
-        <?php
+        header('Location: index.php?page=profile');
+        if ($_SESSION["is_admin"]){
+            header('location: index.php?page=profileADM');
+        }
         die();
     }
     else {
         $error = "Email ou mot de passe incorrecte";
     }
+
 }
 ?>
 

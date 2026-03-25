@@ -12,6 +12,11 @@ function login_user($email, $password){
         $_SESSION["user_id"] = $user['user_id'];
         $_SESSION["email"] = $user['email'];
         $_SESSION["nickname"] = $user['nickname'];
+        $stmtAdmin = $db->prepare("SELECT user_id FROM Admin WHERE user_id = :id");
+        $stmtAdmin->execute([
+            "id" => $user['user_id']
+        ]);
+        $_SESSION["is_admin"] = (bool)$stmtAdmin->fetch();
         return true;
     }
     return false;
@@ -64,5 +69,11 @@ function register_user($fName,$sName, $email, $password, $tel = null){
     } catch (Exception $e) {
         $db->rollBack();
         return "Erreur lors de l'enregistrement : " . $e->getMessage();
+    }
+}
+function require_admin() {
+    if (!is_logged_in() || !isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
+        header("Location: index.php?page=login");
+        exit;
     }
 }

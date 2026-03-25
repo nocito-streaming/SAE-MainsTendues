@@ -21,8 +21,17 @@
             <a href="index.php?page=home">Accueil</a>
             <a href="index.php?page=requestHelp">Demander de l'aide</a>
             <a href="index.php?page=offerHelp">Proposer de l'aide</a>
-            <a href="index.php?page=login">Se connecter</a>
-            <a href="index.php?page=signUp" class="btn-signup">Créer un compte</a>
+            <?php if (isset($_SESSION['user_id'])):
+                if ($_SESSION['is_admin'] === true ): ?>
+                    <a href="index.php?page=profileADM">Profile d'Administrateur</a>
+                <?php else: ?>
+                    <a href="index.php?page=profile">Profile</a>
+                <?php endif?>
+                <a href="index.php?page=logout" >Quit</a>
+            <?php else: ?>
+                <a href="index.php?page=login">Se connecter</a>
+                <a href="index.php?page=signUp" class="btn-signup">Créer un compte</a>
+            <?php endif ?>
         </nav>
     </header>
 </body>

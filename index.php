@@ -2,9 +2,10 @@
 session_start();
 ob_start();
 
+// TO SHOW THE ERRORS, DELETE AFTER DEVELOPMENT STAGE
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+// TO SHOW THE ERRORS, DELETE AFTER DEVELOPMENT STAGE
 
 // 1. Configuration et variables
 $dirPages = './src/pages/';

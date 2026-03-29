@@ -117,7 +117,4 @@
         <p>Main dans la main, pour un meilleur demain</p>
         <p class="footer-sub">Plateforme de solidarité et d'entraide pour un monde plus inclusif.</p>
     </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 MainsTendues. Tous droits réservés.</p>
-    </div>
 </footer>

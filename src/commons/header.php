@@ -17,7 +17,13 @@
             </div>
         </div>
 
-        <nav>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="nav-menu">
             <a href="index.php?page=home">Accueil</a>
             <a href="index.php?page=requestHelp">Demander de l'aide</a>
             <a href="index.php?page=offerHelp">Proposer de l'aide</a>
@@ -27,12 +33,22 @@
                 <?php else: ?>
                     <a href="index.php?page=profile">Profile</a>
                 <?php endif?>
-                <a href="index.php?page=logout" >Quit</a>
+                <a href="index.php?page=logout">Quit</a>
             <?php else: ?>
                 <a href="index.php?page=login">Se connecter</a>
                 <a href="index.php?page=signUp" class="btn-signup">Créer un compte</a>
             <?php endif ?>
         </nav>
     </header>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

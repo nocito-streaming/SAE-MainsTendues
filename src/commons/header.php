@@ -6,6 +6,7 @@
     <title>Plateforme d'Entraide</title>
     <link href="./src/commons/header.css" rel="stylesheet" type="text/css"/>
     <link href="./assets/css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" href="./assets/images/logo.png" type="image/x-icon">
 </head>
 <body>
     <header class="main-header">

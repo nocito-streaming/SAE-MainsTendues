@@ -34,12 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link href="./assets/css/signUp.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Bon retour sur MainsTendues !</h1>
-            <p>Une plateforme pour s'entraider et partager.</p>
+        <div class="page-header">
+            <div class="header-content">
+                <h2>Bon retour sur MainsTendues !</h2>
+                <p>Une plateforme pour s'entraider et partager.</p>
+            </div>
         </div>
-    </section>
         <main>
             <nav class="signup-form">
                 <h2>Se connecter</h2>

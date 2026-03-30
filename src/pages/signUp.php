@@ -36,6 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <link href="./assets/css/signUp.css" rel="stylesheet" type="text/css"/>
     </head> 
     <body>
+        <div class="page-header">
+            <div class="header-content">
+                <h2>Créer un compte en quelques clics.</h2>
+                <p>Finaliser la création du compte et profiter de tout nos services.</p>
+            </div>
+        </div>
         <main>
 
 

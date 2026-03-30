@@ -315,29 +315,6 @@ body {
     opacity: 0.9;
 }
 
-.main-footer {
-    background-color: #0f172a;
-    color: white;
-    text-align: center;
-    padding: 60px 20px 20px;
-}
-
-.footer-content {
-    max-width: 600px;
-    margin: 0 auto 40px;
-}
-
-.footer-content h3 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: var(--primary-green);
-}
-
-.footer-sub {
-    color: #94a3b8;
-    margin-top: 15px;
-}
-
 @media (max-width: 768px) {
     .hero-content h1 { font-size: 2.8rem; }
     .hero-content h3 { font-size: 1.4rem; }

@@ -64,7 +64,7 @@
                     <div class="testimonial-author">
                         <div class="author-avatar"><i class="fas fa-user-circle"></i></div>
                         <div class="author-info">
-                            <h4>Jeanne, 78 ans</h4>
+                            <h4>Miroslave, 78 ans</h4>
                             <span>Bénéficiaire</span>
                         </div>
                     </div>
@@ -111,10 +111,3 @@
     </section>
 </main>
 
-<footer class="main-footer">
-    <div class="footer-content">
-        <h3>MainsTendues</h3>
-        <p>Main dans la main, pour un meilleur demain</p>
-        <p class="footer-sub">Plateforme de solidarité et d'entraide pour un monde plus inclusif.</p>
-    </div>
-</footer>

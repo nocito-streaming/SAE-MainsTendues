@@ -301,17 +301,16 @@ body {
     background: linear-gradient(135deg, var(--primary-green), #1D8348);
     color: white;
     text-align: center;
-    padding: 70px 20px;
+    padding: 30px 20px;
 }
 
 .final-cta h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 15px;
 }
 
 .final-cta p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
+    font-size: 1rem;
     opacity: 0.9;
 }
 

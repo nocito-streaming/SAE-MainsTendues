@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/home.css">
 
+
 <main>
     <section class="heroAccueil">  
         <div class="hero-content">
@@ -64,7 +65,7 @@
                     <div class="testimonial-author">
                         <div class="author-avatar"><i class="fas fa-user-circle"></i></div>
                         <div class="author-info">
-                            <h4>Jeanne, 78 ans</h4>
+                            <h4>Miroslave, 78 ans</h4>
                             <span>Bénéficiaire</span>
                         </div>
                     </div>
@@ -109,12 +110,12 @@
             <a href="index.php?page=signUp" class="cta-button primary" style="display: inline-block; margin-top: 20px;">Créer mon compte gratuitement</a>
         </div>
     </section>
+    <footer class="main-footer">
+        <div class="footer-content">
+            <h3>MainsTendues</h3>
+            <p>Main dans la main, pour un meilleur demain</p>
+            <p class="footer-sub">Plateforme de solidarité et d'entraide pour un monde plus inclusif.</p>
+        </div>
+    </footer>
 </main>
 
-<footer class="main-footer">
-    <div class="footer-content">
-        <h3>MainsTendues</h3>
-        <p>Main dans la main, pour un meilleur demain</p>
-        <p class="footer-sub">Plateforme de solidarité et d'entraide pour un monde plus inclusif.</p>
-    </div>
-</footer>

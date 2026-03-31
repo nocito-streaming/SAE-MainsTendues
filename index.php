@@ -29,7 +29,7 @@ $filepath = $dirPages . $page . '.php';
 
 // Structure de chaque page
 
-// Le Header (Menu, CSS, etc.)
+// Le Header
 if (file_exists('./src/commons/header.php')) {
     include './src/commons/header.php';
 }
@@ -40,5 +40,10 @@ if (file_exists($filepath)) {
 } else {
     // Si la page n'existe pas, on affiche la home
     include $dirPages . 'home.php';
+}
+
+// Le Footer 
+if (file_exists('./src/commons/footer.php')) {
+    include './src/commons/footer.php';
 }
 ?>

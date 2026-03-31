@@ -1,30 +1,38 @@
 <?php
-$filterCity = $_GET['city'] ?? '';
+require_once ('./src/db_config.php');
 $filterType = $_GET['hType'] ?? '';
+$filterCity = $_GET['city'] ?? '';
+$cityParam = $filterCity ? "%$filterCity%" : '';
+$typeParam = $filterType ? "%$filterType%" : '';
+try{
+    global $db;
+    $sql = "SELECT HelpRequests.*, Address.city 
+            FROM HelpRequests 
+            INNER JOIN Address ON HelpRequests.idADr = Address.idAdr 
+            ORDER BY 
+                (CASE 
+                    WHEN (Address.city LIKE :city AND :city_raw != '') 
+                     AND (HelpRequests.hType = :hType AND :hType_raw != '') THEN 2
+                    WHEN (Address.city LIKE :city AND :city_raw != '') 
+                      OR (HelpRequests.hType = :hType AND :hType_raw != '') THEN 1
+                    ELSE 0 
+                END) DESC, 
+                updated_at DESC";
 
-$requests = [
-    [
-        'hType' => 'Courses',
-        'status' => 'En attente',
-        'updated_at' => '2026-03-29 10:30:00',
-        'city' => 'Anglet',
-        'content' => 'Bonjour, j\'aurais besoin d\'aide pour porter mes courses ce jeudi.'
-    ],
-    [
-        'hType' => 'Bricolage',
-        'status' => 'Urgent',
-        'updated_at' => '2026-03-28 15:45:00',
-        'city' => 'Biarritz',
-        'content' => 'Mon évier fuit, j\'aurais besoin de quelqu\'un qui s\'y connait un peu en plomberie.'
-    ],
-    [
-        'hType' => 'Compagnie',
-        'status' => 'En attente',
-        'updated_at' => '2026-03-27 09:15:00',
-        'city' => 'Bayonne',
-        'content' => 'Je cherche une personne pour discuter et faire une promenade d\'une heure dans le parc.'
-    ]
-];
+    $stmt = $db->prepare($sql);
+    $stmt->execute([
+        'city' => $cityParam,
+        'city_raw' => $filterCity,
+        'hType' => $typeParam,
+        'hType_raw' => $filterType
+    ]);
+    $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch(PDOException $e){
+    echo "Error: " . $e -> getMessage();
+     $requests = [];
+}
+
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

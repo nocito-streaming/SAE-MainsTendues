@@ -55,7 +55,7 @@ CREATE TABLE Volunteer (
 
 CREATE TABLE HelpRequests (
                               idR INT AUTO_INCREMENT PRIMARY KEY,
-                              title VARCHAR(40),
+                              urgencyLevel VARCHAR(40),
                               hType VARCHAR(50),
                               content TEXT,
                               status VARCHAR(20) DEFAULT 'open',

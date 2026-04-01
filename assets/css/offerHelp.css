@@ -161,6 +161,18 @@ body {
     gap: 6px;
 }
 
+.badges-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
 .badge-blue {
     background: #eef2ff;
     color: #4f46e5;
@@ -238,3 +250,4 @@ body {
     color: #cbd5e1;
     margin-bottom: 15px;
 }
+

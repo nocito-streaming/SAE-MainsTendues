@@ -36,69 +36,95 @@ try{
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="stylesheet" href="./assets/css/offerHelp.css">
+<link rel="stylesheet" href="./assets/css/requestHelp.css">
 
 <div class="page-header">
     <div class="header-content">
-        <h2>Trouvez une mission de solidarité</h2>
-        <p>Découvrez les demandes d'aide près de chez vous et tendez la main à ceux qui en ont besoin.</p>
+        <h2>Demander de l'aide</h2>
+        <p>Remplissez ce formulaire simplement. Nos bénévoles sont là pour vous accompagner au quotidien.</p>
     </div>
 </div>
 
 <div class="wrap">
-    <div class="filter-section">
-        <form method="GET" action="index.php" class="filter-form">
-            <input type="hidden" name="page" value="offerHelp">
+    <div class="form-container">
+        <div class="form-icon">
+            <i class="fas fa-hand-holding-heart"></i>
+        </div>
+        
+        <form action="index.php?page=requestHelp" method="POST" class="help-form">
             
-            <div class="input-group">
-                <i class="fas fa-map-marker-alt"></i>
-                <input type="text" name="city" placeholder="Ville ou Code Postal..." value="<?php echo htmlspecialchars($filterCity); ?>">
+            <div class="form-group">
+                <label for="title"> Titre de votre demande</label>
+                <input type="text" name="title" id="title" maxlength="40" placeholder="Ex : Besoin d'aide pour mes courses" required>
             </div>
-            
-            <div class="input-group">
-                <i class="fas fa-hands-helping"></i>
-                <select name="hType">
-                    <option value="">Tous les types d'aide</option>
-                    <option value="Courses" <?php if($filterType === 'Courses') echo 'selected'; ?>>Courses</option>
-                    <option value="Compagnie" <?php if($filterType === 'Compagnie') echo 'selected'; ?>>Compagnie</option>
-                    <option value="Bricolage" <?php if($filterType === 'Bricolage') echo 'selected'; ?>>Bricolage</option>
-                    <option value="Jardinage" <?php if($filterType === 'Jardinage') echo 'selected'; ?>>Jardinage</option>
-                    <option value="Informatique" <?php if($filterType === 'Informatique') echo 'selected'; ?>>Informatique</option>
+
+            <div class="form-group">
+                <label for="hType"> De quel type d'aide avez-vous besoin ?</label>
+                <select name="hType" id="hType" required onchange="toggleOtherInput(this)">
+                    <option value="" disabled selected>Choisissez une catégorie...</option>
+                    <option value="Courses">Courses</option>
+                    <option value="Compagnie">Compagnie</option>
+                    <option value="Bricolage">Bricolage</option>
+                    <option value="Jardinage">Jardinage</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Autre">Autre (Précisez)</option>
                 </select>
+                
+                <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
             </div>
-            
-            <button type="submit" class="btn-filter"><i class="fas fa-search"></i> Rechercher</button>
-            <a href="index.php?page=offerHelp" class="btn-reset"><i class="fas fa-times"></i></a>
+
+            <div class="address-section" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
+                    Lieu de l'intervention
+                </h3>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1; padding-right: 10px;">
+                        <label for="homeN">N° rue / Bât.</label>
+                        <input type="text" name="homeN" id="homeN" placeholder="Ex: 12B">
+                    </div>
+                    
+                    <div class="form-group" style="flex: 3;">
+                        <label for="street">Nom de la rue</label>
+                        <input type="text" name="street" id="street" placeholder="Ex: Avenue des Mésanges" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half" style="padding-right: 10px;">
+                        <label for="postalCode">Code postal</label>
+                        <input type="text" name="postalCode" id="postalCode" placeholder="Ex: 64600" required>
+                    </div>
+
+                    <div class="form-group half">
+                        <label for="city">Ville</label>
+                        <input type="text" name="city" id="city" value="Anglet" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="content"> Description de votre besoin</label>
+                <textarea name="content" id="content" rows="5" placeholder="Expliquez brièvement ce dont vous avez besoin. Par exemple : 'J'aurais besoin d'aide pour tondre ma pelouse ce week-end...'" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Publier ma demande
+            </button>
         </form>
     </div>
-
-    <div class="grid-container">
-        <?php if (count($requests) > 0): ?>
-            <?php foreach ($requests as $r): ?>
-                <a href="#" class="request-card">
-                    <div class="card-header">
-                        <span class="badge badge-blue"><i class="fas fa-tag"></i> <?php echo htmlspecialchars($r['hType']); ?></span>
-                        <span class="badge badge-red"><?php echo htmlspecialchars($r['status']); ?></span>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo htmlspecialchars($r['hType']); ?> à <?php echo htmlspecialchars($r['city']); ?></h3>
-                        <p class="card-desc">"<?php echo htmlspecialchars($r['content']); ?>"</p>
-                    </div>
-
-                    <hr class="card-divider">
-
-                    <div class="card-footer">
-                        <span class="card-timestamp"><i class="far fa-clock"></i> Publié le <?php echo htmlspecialchars(date('d/m/Y', strtotime($r['updated_at']))); ?></span>
-                        <span class="card-btn-mock">Proposer mon aide <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </a>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="no-results">
-                <i class="fas fa-search-minus fa-3x"></i>
-                <p>Aucune demande ne correspond à vos critères.</p>
-            </div>
-        <?php endif; ?>
-    </div>
 </div>
+
+<script>
+function toggleOtherInput(selectElement) {
+    const otherInput = document.getElementById('hType_other');
+    
+    if (selectElement.value === 'Autre') {
+        otherInput.style.display = 'block';
+        otherInput.setAttribute('required', 'required');
+    } else {
+        otherInput.style.display = 'none';
+        otherInput.removeAttribute('required');
+        otherInput.value = ''; 
+    }
+}
+</script>

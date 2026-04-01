@@ -1,3 +1,33 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once __DIR__ . '/../db_config.php';
+require_once __DIR__ . '/../auth.php';
+global $db;
+$user_id = $_SESSION['user_id'] ?? null;
+if (!$user_id){
+    //INSTEAD OF SIMPLE REDIRECT TO A LOGIN PAGE WRITE A SIMPLE HTML WINDOW, THAT WILL ASK TO CONNECT TO YOUR ACCOUNT TO ACCES THIS PAGE
+    header("Location: index.php?page=login");
+    exit;
+    //INSTEAD OF SIMPLE REDIRECT TO A LOGIN PAGE WRITE A SIMPLE HTML WINDOW, THAT WILL ASK TO CONNECT TO YOUR ACCOUNT TO ACCES THIS PAGE
+}
+else {
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $hType = trim($_POST["hType"] ?? "");
+        $hType_other = trim($_POST["hType_other"] ?? "");
+        $urgency = trim($_POST["urgency"] ?? "");
+        $content = trim($_POST["content"] ?? "");
+        $result = addHelpRequest($hType, $content, $urgency, $user_id, 1);
+        if ($result === true) {
+            echo "La Demande d'aide a ete ajoute avec succes.";
+            exit;
+        } else {
+            $error = $result;
+        }
+    }
+    ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/requestHelp.css">
 
@@ -58,7 +88,6 @@
 </div>
 
 <script>
-function toggleOtherInput(selectElement) {
     const otherInput = document.getElementById('hType_other');
     
     if (selectElement.value === 'Autre') {
@@ -71,3 +100,4 @@ function toggleOtherInput(selectElement) {
     }
 }
 </script>
+<?php } ?>

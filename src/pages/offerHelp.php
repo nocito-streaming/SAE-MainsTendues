@@ -3,7 +3,7 @@ require_once ('./src/db_config.php');
 $filterType = $_GET['hType'] ?? '';
 $filterCity = $_GET['city'] ?? '';
 $cityParam = $filterCity ? "%$filterCity%" : '';
-$typeParam = $filterType ? "%$filterType%" : '';
+$typeParam = $filterType ? : '';
 try{
     global $db;
     $sql = "SELECT HelpRequests.*, Address.city 

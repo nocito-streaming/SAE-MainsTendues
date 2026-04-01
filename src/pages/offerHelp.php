@@ -1,38 +1,38 @@
 <?php
 require_once ('./src/db_config.php');
 
-// Récupération sécurisée des filtres
+
 $filterType = $_GET['hType'] ?? '';
-$filterCity = trim($_GET['city'] ?? '');
-
-try {
+$filterCity = $_GET['city'] ?? '';
+$cityParam = $filterCity ? "%$filterCity%" : '';
+$typeParam = $filterType ? : '';
+try{
     global $db;
-    
-    $sql = "SELECT HelpRequests.*, Address.city 
-            FROM HelpRequests 
-            INNER JOIN Address ON HelpRequests.idADr = Address.idAdr 
-            WHERE 1=1";
-            
-    $params = [];
 
-    if ($filterCity !== '') {
-        $sql .= " AND Address.city LIKE :city";
-        $params['city'] = "%$filterCity%";
-    }
-
-    if ($filterType !== '') {
-        $sql .= " AND HelpRequests.hType = :hType";
-        $params['hType'] = $filterType;
-    }
-
-    $sql .= " ORDER BY updated_at DESC";
+    $sql = "SELECT HelpRequests.*, Address.city
+            FROM HelpRequests
+            INNER JOIN Address ON HelpRequests.idADr = Address.idAdr
+            ORDER BY
+                (CASE
+                    WHEN (Address.city LIKE :city AND :city_raw != '')
+                     AND (HelpRequests.hType = :hType AND :hType_raw != '') THEN 2
+                    WHEN (Address.city LIKE :city AND :city_raw != '')
+                      OR (HelpRequests.hType = :hType AND :hType_raw != '') THEN 1
+                    ELSE 0
+                END) DESC,
+                updated_at DESC";
 
     $stmt = $db->prepare($sql);
-    $stmt->execute($params);
+    $stmt->execute([
+        'city' => $cityParam,
+        'city_raw' => $filterCity,
+        'hType' => $typeParam,
+        'hType_raw' => $filterType
+    ]);
     $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-} catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
+} catch(PDOException $e){
+    echo "Error: " . $e -> getMessage();
     $requests = [];
 }
 ?>
@@ -75,9 +75,9 @@ try {
     </div>
 
     <div class="grid-container">
-        <?php if (count($requests) > 0): ?>
-            <?php foreach ($requests as $r): ?>
-                <a href="#" class="request-card">
+        <?php if (count($requests) > 0){ ?>
+            <?php foreach ($requests as $r){ ?>
+                <a href="index.php?page=oneHelpOffer" class="request-card">
                     <div class="card-header">
                         <div class="badges-group">
                             <span class="badge badge-blue"><i class="fas fa-tag"></i> <?php echo htmlspecialchars($r['hType']); ?></span>
@@ -98,12 +98,12 @@ try {
                         <span class="card-btn-mock">Proposer mon aide <i class="fas fa-arrow-right"></i></span>
                     </div>
                 </a>
-            <?php endforeach; ?>
-        <?php else: ?>
+            <?php } ?>
+        <?php } else { ?>
             <div class="no-results">
                 <i class="fas fa-search-minus fa-3x"></i>
                 <p>Aucune demande ne correspond à vos critères.</p>
             </div>
-        <?php endif; ?>
+        <?php } ?>
     </div>
 </div>

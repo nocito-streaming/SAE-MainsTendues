@@ -1,6 +1,7 @@
 <?php
 require_once  './src/db_config.php';
 require_once  './src/auth.php';
+require_once  './src/functions.php';
 
 $error = null;
 

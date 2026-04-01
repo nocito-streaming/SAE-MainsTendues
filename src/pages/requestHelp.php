@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once __DIR__ . '/../db_config.php';
 require_once __DIR__ . '/../auth.php';
+require_once __DIR__ . '/../functions.php';
 global $db;
 $user_id = $_SESSION['user_id'] ?? null;
 if (!$user_id){
@@ -19,15 +20,26 @@ else {
         $hType_other = trim($_POST["hType_other"] ?? "");
         $urgency = trim($_POST["urgency"] ?? "");
         $content = trim($_POST["content"] ?? "");
-        $result = addHelpRequest($hType, $content, $urgency, $user_id, 1);
-        if ($result === true) {
-            echo "La Demande d'aide a ete ajoute avec succes.";
-            exit;
-        } else {
-            $error = $result;
+        $postal_code = trim($_POST["postal_code"] ?? "");
+        $homeN = trim($_POST["homeN"] ?? "");
+        $street = trim($_POST["street"] ?? "");
+        $city = trim($_POST["city"] ?? "");
+        $insertAdr = addAddress($city, $postal_code, $street, $homeN);
+        if ($insertAdr === true) {
+            $adrId = $db->lastInsertId();
+
+            $result = addHelpRequest($hType, $content, $urgency, $user_id, $adrId);
+            if ($result === true) {
+                //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
+                echo "La Demande d'aide a ete ajoute avec succes.";
+                //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
+                exit;
+            } else {
+                $error = $result;
+            }
         }
     }
-    ?>
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/requestHelp.css">
 
@@ -43,10 +55,16 @@ else {
         <div class="form-icon">
             <i class="fas fa-hand-holding-heart"></i>
         </div>
-        
+
         <form action="index.php?page=requestHelp" method="POST" class="help-form">
+
             <div class="form-group">
-                <label for="hType"><i class="fas fa-hands-helping"></i> De quel type d'aide avez-vous besoin ?</label>
+                <label for="title"> Titre de votre demande</label>
+                <input type="text" name="title" id="title" maxlength="40" placeholder="Ex : Besoin d'aide pour mes courses" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hType"> De quel type d'aide avez-vous besoin ?</label>
                 <select name="hType" id="hType" required onchange="toggleOtherInput(this)">
                     <option value="" disabled selected>Choisissez une catégorie...</option>
                     <option value="Courses">Courses</option>
@@ -56,30 +74,40 @@ else {
                     <option value="Informatique">Informatique</option>
                     <option value="Autre">Autre (Précisez)</option>
                 </select>
-                
+
                 <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
             </div>
+            <div class="address-section" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
+                    Lieu de l'intervention
+                </h3>
 
-            <div class="form-row">
-                <div class="form-group half">
-                    <label for="city"><i class="fas fa-map-marker-alt"></i> Votre ville</label>
-                    <input type="text" name="city" id="city" value="Anglet" required>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1; padding-right: 10px;">
+                        <label for="homeN">N° rue / Bât.</label>
+                        <input type="text" name="homeN" id="homeN" placeholder="Ex: 12B">
+                    </div>
+
+                    <div class="form-group" style="flex: 3;">
+                        <label for="street">Nom de la rue</label>
+                        <input type="text" name="street" id="street" placeholder="Ex: Avenue des Mésanges" required>
+                    </div>
                 </div>
-
-                <div class="form-group half">
-                    <label for="urgency"><i class="fas fa-exclamation-circle"></i> Niveau d'urgence</label>
-                    <select name="urgency" id="urgency" required>
-                        <option value="Normal">Normal (Dans la semaine)</option>
-                        <option value="Urgent">Urgent (Dès que possible)</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group half" style="padding-right: 10px;">
+                        <label for="postalCode">Code postal</label>
+                        <input type="text" name="postalCode" id="postalCode" placeholder="Ex: 64600" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="city">Ville</label>
+                        <input type="text" name="city" id="city" value="Anglet" required>
+                    </div>
                 </div>
             </div>
-
             <div class="form-group">
-                <label for="content"><i class="fas fa-align-left"></i> Description de votre besoin</label>
+                <label for="content"> Description de votre besoin</label>
                 <textarea name="content" id="content" rows="5" placeholder="Expliquez brièvement ce dont vous avez besoin. Par exemple : 'J'aurais besoin d'aide pour tondre ma pelouse ce week-end...'" required></textarea>
             </div>
-
             <button type="submit" class="btn-submit">
                 <i class="fas fa-paper-plane"></i> Publier ma demande
             </button>
@@ -88,16 +116,17 @@ else {
 </div>
 
 <script>
-    const otherInput = document.getElementById('hType_other');
-    
-    if (selectElement.value === 'Autre') {
-        otherInput.style.display = 'block';
-        otherInput.setAttribute('required', 'required');
-    } else {
-        otherInput.style.display = 'none';
-        otherInput.removeAttribute('required');
-        otherInput.value = ''; 
+    function toggleOtherInput(selectElement) {
+        const otherInput = document.getElementById('hType_other');
+
+        if (selectElement.value === 'Autre') {
+            otherInput.style.display = 'block';
+            otherInput.setAttribute('required', 'required');
+        } else {
+            otherInput.style.display = 'none';
+            otherInput.removeAttribute('required');
+            otherInput.value = '';
+        }
     }
-}
 </script>
 <?php } ?>

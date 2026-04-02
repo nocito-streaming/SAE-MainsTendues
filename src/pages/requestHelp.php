@@ -8,33 +8,6 @@ require_once __DIR__ . '/../functions.php';
 global $db;
 $user_id = $_SESSION['user_id'] ?? null;
 
-<<<<<<< Updated upstream
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $hType = trim($_POST["hType"] ?? "");
-        $hType_other = trim($_POST["hType_other"] ?? "");
-        $urgency = trim($_POST["urgency"] ?? "");
-        $content = trim($_POST["content"] ?? "");
-        $postal_code = trim($_POST["postal_code"] ?? "");
-        $homeN = trim($_POST["homeN"] ?? "");
-        $street = trim($_POST["street"] ?? "");
-        $city = trim($_POST["city"] ?? "");
-        $insertAdr = addAddress($city, $postal_code, $street, $homeN);
-        if ($insertAdr === true) {
-            $adrId = $db->lastInsertId();
-
-            $result = addHelpRequest($hType, $content, $urgency, $user_id, $adrId);
-            if ($result === true) {
-                //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
-                echo "La Demande d'aide a ete ajoute avec succes.";
-                //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
-                exit;
-            } else {
-                $error = $result;
-            }
-        }
-    }
-?>
-=======
 if (!$user_id) {
     ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -47,7 +20,7 @@ if (!$user_id) {
         </div>
     </div>
 
-    <div class="wrap_error">
+    <div class="wrap-error">
         <div class="form-container-error auth-container">
             <div class="form-icon icon-error">
                 <i class="fas fa-lock"></i>
@@ -87,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
->>>>>>> Stashed changes
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/requestHelp.css">
 
@@ -103,29 +75,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-icon">
             <i class="fas fa-hand-holding-heart"></i>
         </div>
-<<<<<<< Updated upstream
-=======
         
         <?php if (isset($error)): ?>
             <div class="error-banner">
                 <?php echo htmlspecialchars($error); ?>
             </div>
         <?php endif; ?>
->>>>>>> Stashed changes
 
         <form action="index.php?page=requestHelp" method="POST" class="help-form">
 
             <div class="form-group">
-<<<<<<< Updated upstream
-                <label for="title"> Titre de votre demande</label>
-                <input type="text" name="title" id="title" maxlength="40" placeholder="Ex : Besoin d'aide pour mes courses" required>
-            </div>
-
-            <div class="form-group">
-                <label for="hType"> De quel type d'aide avez-vous besoin ?</label>
-=======
                 <label for="hType">De quel type d'aide avez-vous besoin ?</label>
->>>>>>> Stashed changes
                 <select name="hType" id="hType" required onchange="toggleOtherInput(this)">
                     <option value="" disabled selected>Choisissez une catégorie...</option>
                     <option value="Courses">Courses</option>
@@ -135,41 +95,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="Informatique">Informatique</option>
                     <option value="Autre">Autre (Précisez)</option>
                 </select>
-<<<<<<< Updated upstream
-
-                <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
-=======
                 
                 <input type="text" name="hType_other" id="hType_other" class="hidden-input" placeholder="Quel est ce type d'aide ?">
->>>>>>> Stashed changes
             </div>
             <div class="address-section" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
                 <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
                     Lieu de l'intervention
                 </h3>
 
-<<<<<<< Updated upstream
-                <div class="form-row">
-                    <div class="form-group" style="flex: 1; padding-right: 10px;">
-                        <label for="homeN">N° rue / Bât.</label>
-                        <input type="text" name="homeN" id="homeN" placeholder="Ex: 12B">
-                    </div>
-
-                    <div class="form-group" style="flex: 3;">
-                        <label for="street">Nom de la rue</label>
-                        <input type="text" name="street" id="street" placeholder="Ex: Avenue des Mésanges" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group half" style="padding-right: 10px;">
-                        <label for="postalCode">Code postal</label>
-                        <input type="text" name="postalCode" id="postalCode" placeholder="Ex: 64600" required>
-                    </div>
-                    <div class="form-group half">
-                        <label for="city">Ville</label>
-                        <input type="text" name="city" id="city" value="Anglet" required>
-                    </div>
-=======
             <div class="form-row">
                 <div class="form-group half">
                     <label for="city"> Votre ville</label>
@@ -182,7 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="Normal">Normal (Dans la semaine)</option>
                         <option value="Urgent">Urgent (Dès que possible)</option>
                     </select>
->>>>>>> Stashed changes
                 </div>
             </div>
             <div class="form-group">
@@ -197,22 +129,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script>
-<<<<<<< Updated upstream
-    function toggleOtherInput(selectElement) {
-        const otherInput = document.getElementById('hType_other');
-
-        if (selectElement.value === 'Autre') {
-            otherInput.style.display = 'block';
-            otherInput.setAttribute('required', 'required');
-        } else {
-            otherInput.style.display = 'none';
-            otherInput.removeAttribute('required');
-            otherInput.value = '';
-        }
-    }
-</script>
-<?php } ?>
-=======
 function toggleOtherInput(selectElement) {
     const otherInput = document.getElementById('hType_other');
     
@@ -230,4 +146,3 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleOtherInput(hTypeSelect);
 });
 </script>
->>>>>>> Stashed changes

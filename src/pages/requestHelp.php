@@ -8,6 +8,7 @@ require_once __DIR__ . '/../functions.php';
 global $db;
 $user_id = $_SESSION['user_id'] ?? null;
 
+<<<<<<< Updated upstream
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hType = trim($_POST["hType"] ?? "");
         $hType_other = trim($_POST["hType_other"] ?? "");

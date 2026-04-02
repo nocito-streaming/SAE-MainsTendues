@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Ici, pas de récupération SQL comme demandé. On vérifie juste la session.
 $user_id = $_SESSION['user_id'] ?? null;
 if (!$user_id){
     header("Location: index.php?page=login");

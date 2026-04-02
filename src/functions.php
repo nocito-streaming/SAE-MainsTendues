@@ -39,4 +39,21 @@ function require_admin() {
         exit;
     }
 }
+function getAllUserInfo($userId){
+    try{
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM User
+                                NATURAL JOIN defUser
+                                NATURAL JOIN Address
+                                NATURAL JOIN HelpRequests
+                                WHERE user_id = :id  ");
+    $stmt->execute([
+        "id" => $userId
+    ]);
+    return true;
+    } catch (Exception $e) {
+        return "Erreur lors de l'enregistrement : " . $e->getMessage();
+    }
+}
 ?>
+

@@ -13,11 +13,6 @@ $information = getAllUserInfo($user_id);
 
 ?>
 
-<<<<<<< Updated upstream
-<h1>Page de profile</h1>
-<div class = "ChangerInfo" >
-    <div class = "Adresse" ></div>
-=======
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/profile.css">
 
@@ -107,5 +102,4 @@ $information = getAllUserInfo($user_id);
 
         </div>
     </div>
->>>>>>> Stashed changes
 </div>

@@ -61,11 +61,11 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="quote-text">"Grâce à MainsTendues, j'ai rencontré Lucas qui vient m'aider à faire mes courses une fois par semaine. Au-delà de l'aide pratique, c'est devenu un vrai moment d'échange que j'attends avec impatience."</p>
+                    <p class="quote-text">"Grâce à MainsTendues, j'ai rencontré Daniiil qui vient m'aider à faire mes courses une fois par semaine. Au-delà de l'aide pratique, c'est devenu un vrai moment d'échange que j'attends avec impatience, je ne me vois plus vivre sans lui."</p>
                     <div class="testimonial-author">
                         <div class="author-avatar"><i class="fas fa-user-circle"></i></div>
                         <div class="author-info">
-                            <h4>Miroslave, 78 ans</h4>
+                            <h4>Miroslave, 109 ans</h4>
                             <span>Bénéficiaire</span>
                         </div>
                     </div>

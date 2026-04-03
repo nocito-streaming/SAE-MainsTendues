@@ -74,7 +74,7 @@ CREATE TABLE Help (
                       assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                       PRIMARY KEY (volunteer_id, idR),
                       FOREIGN KEY (volunteer_id) REFERENCES Volunteer(user_id),
-                      FOREIGN KEY (idR) REFERENCES HelpRequests(idR)
+                      FOREIGN KEY (idR) REFERENCES HelpRequests(idR) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Report (
@@ -85,8 +85,8 @@ CREATE TABLE Report (
                         admin_id INT,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                        FOREIGN KEY (idR) REFERENCES HelpRequests(idR),
-                        FOREIGN KEY (creator_id) REFERENCES defUser(user_id),
+                        FOREIGN KEY (idR) REFERENCES HelpRequests(idR) ON DELETE CASCADE ON UPDATE CASCADE,
+                        FOREIGN KEY (creator_id) REFERENCES defUser(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
                         FOREIGN KEY (admin_id) REFERENCES Admin(user_id)
 );
 #CREATION OF DEFAULT ADDRESS SET TO ALL USERS WHO HAVEN'T SUBMITTED IT YET

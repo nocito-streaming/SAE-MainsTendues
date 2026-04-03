@@ -4,7 +4,6 @@ require_once './src/auth.php';
 require_once  './src/functions.php';
 
 require_admin();
-
 global $db;
 $view = $_GET['view'] ?? 'requests';
 $search = $_GET['search'] ?? '';
@@ -12,15 +11,15 @@ $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'delete_request' && isset($_POST['idR'])) {
-        $stmt = $db->prepare("DELETE FROM HelpRequests WHERE idR = ?");
-        $stmt->execute([$_POST['idR']]);
-        $message = "Demande supprimée.";
+        $result = deleteHelpRequest($_POST['idR']);
+        if ($result){$message = "Demande supprimée.";}
+        else {$message = "Erreur lors de la suppression.";}
     }
 
     if ($_POST['action'] === 'delete_user' && isset($_POST['user_id'])) {
-        $stmt = $db->prepare("DELETE FROM User WHERE user_id = ?");
-        $stmt->execute([$_POST['user_id']]);
-        $message = "Utilisateur supprimé.";
+        $result = deleteUser($_POST['user_id']);
+        if ($result) {$message = "Utilisateur supprimé.";}
+        else{$message = "Utilisateur supprimé.";}
     }
 }
 

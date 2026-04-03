@@ -101,3 +101,28 @@ function getNumberCompletedRequestsByUser($userId): int{
         return 0;
     }
 }
+function deleteUser($userId) {
+    global $db;
+    try{
+        $stmt = $db->prepare("DELETE FROM User WHERE user_id = :id");
+        $stmt->execute([
+            "id" => $userId
+        ]);
+        return true;
+    }
+    catch(PDOException $e){
+        return false;
+    }
+}
+function deleteHelpRequest($helpRequestId) {
+    global $db;
+    try{
+        $stmt = $db->prepare("DELETE FROM HelpRequests WHERE idR = :id");
+        $stmt->execute([
+            "id" => $helpRequestId
+        ]);
+        return true;
+    } catch (PDOException $e){
+        return false;
+    }
+}

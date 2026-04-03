@@ -14,6 +14,8 @@ if (!$user_id){
 $information = getAllUserInfo($user_id);
 print_r($information);
 $formatedDate = dateformatter($information[0]['created_at']);
+$nbRequests = getNumberHelpRequestsByUser($user_id);
+$nbHelp = getNumberCompletedRequestsByUser($user_id);
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -62,14 +64,14 @@ $formatedDate = dateformatter($information[0]['created_at']);
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <div class="stat-details">
-                        <span class="stat-number">3</span>
+                        <span class="stat-number"><?php echo $nbRequests?></span>
                         <span class="stat-label">Demandes d'aide</span>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon" style="color: #3b82f6; background: #eff6ff;"><i class="fas fa-hands-helping"></i></div>
                     <div class="stat-details">
-                        <span class="stat-number">5</span>
+                        <span class="stat-number"><?php echo $nbHelp?></span>
                         <span class="stat-label">Aides proposées</span>
                     </div>
                 </div>

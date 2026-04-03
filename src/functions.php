@@ -60,7 +60,8 @@ function getAllUserInfo($userId): array|string
         return "Erreur lors de l'enregistrement : " . $e->getMessage();
     }
 }
-function dateformatter($date): string{
+function dateformatter($date): string
+{
     $dateString = $date ?? 'now';
     $date = new DateTime($dateString);
 
@@ -73,4 +74,30 @@ function dateformatter($date): string{
     $year = $date->format('Y');
     return $monthName . " " . $year;
 }
-
+function getNumberHelpRequestsByUser($userId): int
+{
+    global $db;
+    try {
+        $stmt = $db->prepare("SELECT COUNT(*) as count  FROM HelpRequests WHERE inNeed_id = :id");
+        $stmt->execute([
+            "id" => $userId
+        ]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return (int)$result[0]['count'];
+    }catch (Exception $e) {
+        return 0;
+    }
+}
+function getNumberCompletedRequestsByUser($userId): int{
+    global $db;
+    try{
+        $stmt = $db->prepare("SELECT COUNT(*) as count  FROM Help WHERE volunteer_id = :id");
+        $stmt->execute([
+            "id" => $userId
+        ]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return (int)$result[0]['count'];
+    }catch(Exception $e){
+        return 0;
+    }
+}

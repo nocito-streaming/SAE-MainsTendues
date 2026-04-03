@@ -41,9 +41,4 @@ if (file_exists($filepath)) {
     // Si la page n'existe pas, on affiche la home
     include $dirPages . 'home.php';
 }
-
-// Le Footer 
-if (file_exists('./src/commons/footer.php')) {
-    include './src/commons/footer.php';
-}
 ?>

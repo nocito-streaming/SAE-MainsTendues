@@ -82,7 +82,8 @@ try{
                         <div class="badges-group">
                             <span class="badge badge-blue"><i class="fas fa-tag"></i> <?php echo htmlspecialchars($r['hType']); ?></span>
                             <span class="badge badge-green"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($r['city']); ?></span>
-                            <span class="badge badge-red"><?php echo htmlspecialchars($r['status']); ?></span>
+                            <!-- ADD htmlspecialchars() AFTER cleaning the data base -->
+                            <span class="badge badge-red"><?php echo $r['urgencyLevel']; ?></span>
                         </div>
                     </div>
 

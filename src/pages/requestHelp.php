@@ -96,8 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <select name="hType" id="hType" required onchange="toggleOtherInput(this)">
                         <option value="" disabled selected>Choisissez une catégorie...</option>
                         <option value="Courses">Courses</option>
-
-                        @@ -56,48 +74,59 @@
+                        <option value="Compagnie">Compagnie</option>
+                        <option value="Bricolage">Bricolage</option>
+                        <option value="Jardinage">Jardinage</option>
                         <option value="Informatique">Informatique</option>
                         <option value="Autre">Autre (Précisez)</option>
                     </select>

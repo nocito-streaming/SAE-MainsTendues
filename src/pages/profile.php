@@ -12,7 +12,6 @@ if (!$user_id){
     exit;
 }
 $information = getAllUserInfo($user_id);
-print_r($information);
 $formatedDate = dateformatter($information[0]['created_at']);
 $nbRequests = getNumberHelpRequestsByUser($user_id);
 $nbHelp = getNumberCompletedRequestsByUser($user_id);

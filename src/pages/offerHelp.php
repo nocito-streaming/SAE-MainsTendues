@@ -68,6 +68,17 @@ try{
                     <option value="Informatique" <?php if($filterType === 'Informatique') echo 'selected'; ?>>Informatique</option>
                 </select>
             </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <select name="hType">
+                    <option value="">Niveau d'urgence</option>
+                    <option value="Faible" <?php if($filterType === 'Faible') echo 'selected'; ?>>Faible</option>
+                    <option value="Moyen" <?php if($filterType === 'Moyen') echo 'selected'; ?>>Moyen</option>
+                    <option value="Élevé" <?php if($filterType === 'Élevé') echo 'selected'; ?>>Élevé</option>
+                </select>
+            </div>
+
             
             <button type="submit" class="btn-filter"><i class="fas fa-search"></i> Rechercher</button>
             <a href="index.php?page=offerHelp" class="btn-reset" title="Réinitialiser"><i class="fas fa-times"></i></a>
@@ -83,7 +94,8 @@ try{
                             <span class="badge badge-blue"><i class="fas fa-tag"></i> <?php echo htmlspecialchars($r['hType']); ?></span>
                             <span class="badge badge-green"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($r['city']); ?></span>
                             <!-- ADD htmlspecialchars() AFTER cleaning the data base -->
-                            <span class="badge badge-red"><?php echo $r['urgencyLevel']; ?></span>
+                            <span class="badge badge-red"><i class="fa-solid fa-triangle-exclamation"></i>  
+                            <?php echo $r['urgencyLevel']; ?></span>
                         </div>
                     </div>
 

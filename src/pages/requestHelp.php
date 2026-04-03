@@ -111,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="form-row">
                         <div class="form-group" style="flex: 1; padding-right: 10px;">
-                            <label for="homeN">N° rue / Bât.</label>
+                            <label for="homeN">N° rue</label>
                             <input type="text" name="homeN" id="homeN" placeholder="Ex: 12B">
                         </div>
 

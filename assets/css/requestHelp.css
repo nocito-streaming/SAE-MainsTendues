@@ -150,6 +150,10 @@ body {
     gap: 20px;
 }
 
+.form-row:first-of-type {
+    margin-bottom: 20px;
+}
+
 .half {
     flex: 1;
 }

@@ -44,7 +44,6 @@ function register_user($fName,$sName, $email, $password, $tel = null){
     }
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     try {
-        $db->beginTransaction();
 
         $stmt = $db->prepare("INSERT INTO User (email, pwdHash) VALUES (:email, :pwdHash)");
         $stmt->execute([
@@ -62,9 +61,6 @@ function register_user($fName,$sName, $email, $password, $tel = null){
             "sName" => $sName,
             "tel" => $tel
         ]);
-
-        $db->commit();
-        $db->rollBack();
 
         $stmt = $db -> prepare("INSERT INTO InNeed VALUES (:user_id)");
         $stmt->execute([

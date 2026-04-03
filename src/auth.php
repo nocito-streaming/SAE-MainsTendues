@@ -46,7 +46,6 @@ function register_user($fName,$sName, $email, $password, $tel = null){
     try {
         $db->beginTransaction();
 
-        // 2. Insertion dans la table User (Base)
         $stmt = $db->prepare("INSERT INTO User (email, pwdHash) VALUES (:email, :pwdHash)");
         $stmt->execute([
             "email" => $email,
@@ -65,10 +64,15 @@ function register_user($fName,$sName, $email, $password, $tel = null){
         ]);
 
         $db->commit();
-        return true;
-    } catch (Exception $e) {
         $db->rollBack();
-        return "Erreur lors de l'enregistrement : " . $e->getMessage();
+
+        $stmt = $db -> prepare("INSERT INTO InNeed VALUES (:user_id)");
+        $stmt->execute([
+        "user_id" => $userId
+        ]);
+        return true;
+    } catch (PDOException $e){
+        return $e->getMessage();
     }
 }
 ?>

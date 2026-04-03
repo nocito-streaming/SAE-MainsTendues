@@ -55,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $insertAdr = addAddress($city, $postal_code, $street, $homeN);
     if ($insertAdr === true) {
         $adrId = $db->lastInsertId();
-
         $result = addHelpRequest($hType, $content, $urgency, $user_id, $adrId);
         if ($result === true) {
             //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
@@ -64,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         } else {
             $error = $result;
+            echo $error;
         }
     }
 }

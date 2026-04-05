@@ -4,29 +4,106 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $user_id = $_SESSION['user_id'] ?? null;
+require_once('./src/db_config.php');
 $idR = $_GET['idR'] ?? null;
+$message_success = false;
 
-// --- DUMMY DATA --- 
-// (À remplacer par votre SELECT HelpRequests JOIN defUser JOIN Address WHERE idR = :idR)
-$req_title = "Besoin d'aide pour monter un meuble IKEA";
-$req_type = "Bricolage";
-$req_urgency = "Urgent";
-$req_content = "Bonjour, j'ai acheté une grande armoire PAX ce matin mais je me rends compte que c'est trop lourd et compliqué à monter seul. J'aurais besoin d'une personne avec quelques outils de base (tournevis, visseuse) pour m'aider ce week-end. Je prépare le café et les croissants ! Merci d'avance.";
-$req_name = "Marie Dubois";
-$req_city = "Anglet";
-$req_date = "03/04/2026";
-$req_status = "open";
+if ($idR) {
+    try {
+        global $db;
+        
+        // Requête corrigée selon TON schéma SQL
+        $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName 
+                FROM HelpRequests 
+                INNER JOIN Address ON HelpRequests.idAdr = Address.idAdr
+                INNER JOIN InNeed ON HelpRequests.inNeed_id = InNeed.user_id
+                INNER JOIN defUser ON InNeed.user_id = defUser.user_id
+                WHERE HelpRequests.idR = :idR";
+        
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['idR' => $idR]);
+        $r = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$r) {
+            die("Désolé, cette annonce n'existe plus.");
+        }
+
+        // On mappe les bonnes colonnes (fName / sName)
+        $req_title = $r['hType'] . " - " . $r['city']; // Si 'title' n'existe pas dans ton SQL
+        if (isset($r['title'])) $req_title = $r['title']; 
+        
+        $req_type = $r['hType'];
+        $req_urgency = $r['urgencyLevel'];
+        $req_content = $r['content'];
+        $req_name = $r['fName'] . " " . $r['sName']; // fName et sName ici !
+        $req_city = $r['city'];
+        $req_date = date('d/m/Y', strtotime($r['updated_at']));
+        $req_status = $r['status']; 
+
+    } catch (PDOException $e) {
+        die("Erreur BDD : " . $e->getMessage());
+    }
+} else {
+    die("Aucune annonce sélectionnée.");
+}
 
 // Traitement du formulaire de proposition d'aide
 $message_success = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
-    // Ici, votre INSERT INTO Help (volunteer_id, idR, firstMessage) VALUES (...)
-    $message_success = true;
+    
+    $apiKey = 're_c9Z3Ny99_5kLsSB5gwVihJ3QoEuuBLdYi'; 
+
+    $emailData = [
+        'from'    => 'onboarding@resend.dev',
+        'to'      => 'snt.thom@gmail.com',
+        'subject' => 'Nouvelle proposition d\'aide : ' . $req_title,
+        'html'    => '
+            <p><strong>Message de l\'intervenant :</strong></p>
+            <blockquote style="border-left: 4px solid #ccc; padding-left: 10px;">' 
+            . nl2br(htmlspecialchars($_POST['firstMessage'])) . 
+            '</blockquote>
+        '
+    ];
+
+    $ch = curl_init('https://api.resend.com/emails');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($emailData),
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json'
+        ],
+        CURLOPT_CONNECTTIMEOUT => 5, // Arrête d'essayer de se connecter après 5 sec
+        CURLOPT_TIMEOUT        => 10, // Arrête l'opération totale après 10 sec
+        CURLOPT_SSL_VERIFYPEER => false, // Désactive la vérification SSL (très utile sur les serveurs d'école qui n'ont pas les certificats à jour)
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch); // On récupère l'erreur précise ici
+    curl_close($ch);
+
+    if ($httpCode == 200 || $httpCode == 201) {
+        $message_success = true;
+    } else {
+        // Si ça rate, on affiche l'erreur pour comprendre
+        echo "<div style='color:red; background:white; padding:10px;'>";
+        echo "<strong>Erreur d'envoi :</strong><br>";
+        echo "Code HTTP : " . $httpCode . "<br>";
+        echo "Erreur Curl : " . $curlError;
+        echo "</div>";
+    }
 }
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/oneHelpOffer.css">
+<link rel="stylesheet" href="assets/css/oneHelpOffer.css">
+
+<link rel="stylesheet" href="./assets/css/oneHelpOffer.css">
+
+<link rel="stylesheet" href="/assets/css/oneHelpOffer.css">
 
 <div class="page-header">
     <div class="header-content">

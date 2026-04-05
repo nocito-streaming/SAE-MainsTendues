@@ -88,7 +88,7 @@ try{
     <div class="grid-container">
         <?php if (count($requests) > 0){ ?>
             <?php foreach ($requests as $r){ ?>
-                <a href="index.php?page=oneHelpOffer" class="request-card">
+                <a href="index.php?page=oneHelpOffer&idR=<?php echo $r['idR']; ?>" class="request-card">
                     <div class="card-header">
                         <div class="badges-group">
                             <span class="badge badge-blue"><i class="fas fa-tag"></i> <?php echo htmlspecialchars($r['hType']); ?></span>

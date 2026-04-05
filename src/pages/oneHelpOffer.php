@@ -1,18 +1,25 @@
 <?php
+/**
+ * Détail d'une demande d'aide (oneHelpOffer).
+ * Gère l'affichage dynamique de l'annonce et le traitement du formulaire de réponse via l'API Resend.
+ */
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 $user_id = $_SESSION['user_id'] ?? null;
 require_once('./src/db_config.php');
+
 $idR = $_GET['idR'] ?? null;
 $message_success = false;
 
+// Récupération des données de l'annonce
 if ($idR) {
     try {
         global $db;
         
-        // Requête corrigée selon TON schéma SQL
+        // Jointure pour récupérer l'annonce, la ville associée et les infos du demandeur
         $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName 
                 FROM HelpRequests 
                 INNER JOIN Address ON HelpRequests.idAdr = Address.idAdr
@@ -28,14 +35,16 @@ if ($idR) {
             die("Désolé, cette annonce n'existe plus.");
         }
 
-        // On mappe les bonnes colonnes (fName / sName)
-        $req_title = $r['hType'] . " - " . $r['city']; // Si 'title' n'existe pas dans ton SQL
-        if (isset($r['title'])) $req_title = $r['title']; 
+        // Formatage des variables pour la vue
+        $req_title = $r['hType'] . " - " . $r['city'];
+        if (isset($r['title'])) { 
+            $req_title = $r['title']; 
+        } 
         
         $req_type = $r['hType'];
         $req_urgency = $r['urgencyLevel'];
         $req_content = $r['content'];
-        $req_name = $r['fName'] . " " . $r['sName']; // fName et sName ici !
+        $req_name = $r['fName'] . " " . $r['sName'];
         $req_city = $r['city'];
         $req_date = date('d/m/Y', strtotime($r['updated_at']));
         $req_status = $r['status']; 
@@ -47,10 +56,10 @@ if ($idR) {
     die("Aucune annonce sélectionnée.");
 }
 
-// Traitement du formulaire de proposition d'aide
-$message_success = false;
+// Traitement de la proposition d'aide (Envoi d'email via Resend)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     
+    // TODO: Placer cette clé dans un fichier .env avant la mise en production
     $apiKey = 're_c9Z3Ny99_5kLsSB5gwVihJ3QoEuuBLdYi'; 
 
     $emailData = [
@@ -74,22 +83,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
             'Authorization: Bearer ' . $apiKey,
             'Content-Type: application/json'
         ],
-        CURLOPT_CONNECTTIMEOUT => 5, // Arrête d'essayer de se connecter après 5 sec
-        CURLOPT_TIMEOUT        => 10, // Arrête l'opération totale après 10 sec
-        CURLOPT_SSL_VERIFYPEER => false, // Désactive la vérification SSL (très utile sur les serveurs d'école qui n'ont pas les certificats à jour)
+        CURLOPT_CONNECTTIMEOUT => 5, // Évite de bloquer le script si l'API est injoignable
+        CURLOPT_TIMEOUT        => 10,
+        CURLOPT_SSL_VERIFYPEER => false, // Désactivé pour compatibilité avec le pare-feu local
     ]);
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlError = curl_error($ch); // On récupère l'erreur précise ici
+    $curlError = curl_error($ch); 
     curl_close($ch);
 
     if ($httpCode == 200 || $httpCode == 201) {
         $message_success = true;
     } else {
-        // Si ça rate, on affiche l'erreur pour comprendre
         echo "<div style='color:red; background:white; padding:10px;'>";
-        echo "<strong>Erreur d'envoi :</strong><br>";
+        echo "<strong>Erreur d'envoi API :</strong><br>";
         echo "Code HTTP : " . $httpCode . "<br>";
         echo "Erreur Curl : " . $curlError;
         echo "</div>";
@@ -98,12 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="./assets/css/oneHelpOffer.css">
 <link rel="stylesheet" href="assets/css/oneHelpOffer.css">
-
-<link rel="stylesheet" href="./assets/css/oneHelpOffer.css">
-
-<link rel="stylesheet" href="/assets/css/oneHelpOffer.css">
 
 <div class="page-header">
     <div class="header-content">

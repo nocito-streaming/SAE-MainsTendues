@@ -163,7 +163,7 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title): bool{
             'Content-Type: application/json'
         ],
         CURLOPT_CONNECTTIMEOUT => 5,
-        CURLOPT_TIMEOUT        => 30,
+        CURLOPT_TIMEOUT        => 15,
     );
     curl_setopt_array($ch, $options);
     curl_setopt($ch, CURLOPT_PROXY, 'http://cache.univ-pau.fr:3128');

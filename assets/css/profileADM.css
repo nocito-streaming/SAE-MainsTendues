@@ -1,19 +1,18 @@
 body {
-    background-color: #f1f5f9;
+    background-color: var(--bg-body);
 }
 
-/* --- LAYOUT --- */
 .admin-layout {
     display: flex;
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f1f5f9;
+    background-color: var(--bg-body);
 }
 
 .admin-sidebar {
     width: 260px;
-    background-color: #1e293b;
-    color: white;
+    background-color: var(--text-dark);
+    color: var(--white);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -24,13 +23,13 @@ body {
 
 .sidebar-header {
     padding: 30px 20px;
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid var(--bg-dark-hover);
 }
 
 .sidebar-header h3 {
     margin: 0;
     font-size: 22px;
-    color: #f8fafc;
+    color: var(--bg-light);
     display: flex;
     align-items: center;
 }
@@ -51,7 +50,7 @@ body {
     align-items: center;
     gap: 12px;
     padding: 15px 25px;
-    color: #cbd5e1;
+    color: var(--border-color);
     text-decoration: none;
     transition: all 0.3s ease;
     border-left: 4px solid transparent;
@@ -59,27 +58,26 @@ body {
 }
 
 .nav-links a:hover {
-    background-color: #334155;
-    color: white;
+    background-color: var(--bg-dark-hover);
+    color: var(--white);
 }
 
 .nav-links .active a {
-    background-color: #f0fdf4;
-    color: #16a34a;
-    border-left-color: #28B463;
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border-left-color: var(--primary-green);
 }
 
-/* --- LOGOUT --- */
 .logout-link {
     padding: 20px;
-    border-top: 1px solid #334155;
+    border-top: 1px solid var(--bg-dark-hover);
 }
 
 .logout-link a {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: #ef4444;
+    color: var(--primary-red);
     text-decoration: none;
     padding: 10px 5px;
     transition: color 0.3s ease;
@@ -87,10 +85,9 @@ body {
 }
 
 .logout-link a:hover {
-    color: #fca5a5;
+    color: var(--error-bg);
 }
 
-/* --- MAIN CONTENT --- */
 .admin-main {
     margin-left: 260px;
     flex: 1;
@@ -102,7 +99,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
-    background: white;
+    background: var(--white);
     padding: 20px 30px;
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
@@ -110,11 +107,10 @@ body {
 
 .content-header h1 {
     margin: 0;
-    color: #0f172a;
+    color: var(--text-dark);
     font-size: 24px;
 }
 
-/* --- SEARCH FORM --- */
 .search-form {
     display: flex;
     align-items: center;
@@ -130,30 +126,30 @@ body {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #94a3b8;
+    color: var(--text-muted);
 }
 
 .search-form input[type="text"] {
     padding: 12px 15px 12px 40px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 14px;
     width: 280px;
     outline: none;
     transition: all 0.3s ease;
-    background-color: #f8fafc;
+    background-color: var(--bg-light);
 }
 
 .search-form input[type="text"]:focus {
-    border-color: #28B463;
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(40, 180, 99, 0.1);
+    border-color: var(--primary-green);
+    background-color: var(--white);
+    box-shadow: var(--focus-ring);
 }
 
 .btn-search {
     padding: 12px 20px;
-    background-color: #28B463;
-    color: white;
+    background-color: var(--primary-green);
+    color: var(--white);
     border: none;
     border-radius: 8px;
     font-weight: 600;
@@ -162,13 +158,13 @@ body {
 }
 
 .btn-search:hover {
-    background-color: #1D8348;
+    background-color: var(--dark-green);
 }
 
 .btn-clear {
     padding: 12px 15px;
-    background-color: #f1f5f9;
-    color: #64748b;
+    background-color: var(--bg-body);
+    color: var(--text-muted);
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -178,16 +174,15 @@ body {
 }
 
 .btn-clear:hover {
-    background-color: #e2e8f0;
-    color: #ef4444;
+    background-color: var(--border-color);
+    color: var(--primary-red);
 }
 
-/* --- ALERTS --- */
 .alert {
-    background-color: #dcfce7;
-    color: #16a34a;
+    background-color: var(--success-bg);
+    color: var(--success-text);
     padding: 16px 20px;
-    border-left: 4px solid #22c55e;
+    border-left: 4px solid var(--success-text);
     border-radius: 8px;
     margin-bottom: 25px;
     font-weight: 500;
@@ -197,9 +192,8 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-/* --- TABLE --- */
 .table-container {
-    background: white;
+    background: var(--white);
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
     overflow: hidden;
@@ -211,16 +205,16 @@ body {
 }
 
 .admin-table thead {
-    background-color: #f8fafc;
-    border-bottom: 2px solid #e2e8f0;
+    background-color: var(--bg-light);
+    border-bottom: 2px solid var(--border-color);
 }
 
 .admin-table th,
 .admin-table td {
     padding: 18px 25px;
     text-align: left;
-    border-bottom: 1px solid #f1f5f9;
-    color: #334155;
+    border-bottom: 1px solid var(--bg-body);
+    color: var(--bg-dark-hover);
 }
 
 .admin-table th {
@@ -228,7 +222,7 @@ body {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .admin-table tbody tr {
@@ -236,7 +230,7 @@ body {
 }
 
 .admin-table tbody tr:hover {
-    background-color: #f8fafc;
+    background-color: var(--bg-light);
 }
 
 .user-name {
@@ -244,11 +238,11 @@ body {
     align-items: center;
     gap: 10px;
     font-weight: 500;
-    color: #0f172a;
+    color: var(--text-dark);
 }
 
 .user-name i {
-    color: #94a3b8;
+    color: var(--text-muted);
     font-size: 18px;
 }
 
@@ -256,7 +250,6 @@ body {
     text-align: center !important;
 }
 
-/* --- BADGES --- */
 .badge {
     padding: 6px 12px;
     border-radius: 20px;
@@ -266,24 +259,23 @@ body {
 }
 
 .badge-type {
-    background-color: #e0f2fe;
-    color: #0369a1;
+    background-color: var(--badge-blue-bg);
+    color: var(--badge-blue-text);
 }
 
 .badge-normal {
-    background-color: #f1f5f9;
-    color: #475569;
+    background-color: var(--bg-body);
+    color: var(--text-muted);
 }
 
 .badge-urgent {
-    background-color: #fee2e2;
-    color: #b91c1c;
+    background-color: var(--error-bg);
+    color: var(--primary-red);
 }
 
-/* --- BUTTONS --- */
 .btn-delete {
-    background-color: #fee2e2;
-    color: #ef4444;
+    background-color: var(--error-bg);
+    color: var(--primary-red);
     border: none;
     width: 36px;
     height: 36px;
@@ -296,23 +288,22 @@ body {
 }
 
 .btn-delete:hover {
-    background-color: #ef4444;
-    color: white;
+    background-color: var(--primary-red);
+    color: var(--white);
     transform: scale(1.05);
 }
 
 .empty-state {
     text-align: center;
     padding: 60px 20px !important;
-    color: #94a3b8;
+    color: var(--text-muted);
 }
 
 .empty-state i {
-    color: #cbd5e1;
+    color: var(--border-color);
     margin-bottom: 15px;
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 992px) {
     .admin-sidebar {
         width: 80px;

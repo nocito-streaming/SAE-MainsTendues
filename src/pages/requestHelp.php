@@ -10,6 +10,7 @@ $user_id = $_SESSION['user_id'] ?? null;
 
 if (!$user_id) {
     ?>
+    <link rel="stylesheet" href="./assets/css/variable.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/requestHelp.css">
 
@@ -68,9 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+    <link rel="stylesheet" href="./assets/css/variable.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/requestHelp.css">
-
+    
     <div class="page-header">
         <div class="header-content">
             <h2>Demander de l'aide</h2>

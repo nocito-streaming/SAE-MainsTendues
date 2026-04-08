@@ -1,12 +1,12 @@
 body {
-    background-color: #f4f7f6;
+    background-color: var(--bg-body);
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .page-header {
-    background: linear-gradient(135deg, #28B463, #1D8348);
-    color: white;
+    background: var(--gradient-primary);
+    color: var(--white);
     padding: 60px 20px;
     text-align: center;
     margin-bottom: -60px;
@@ -30,7 +30,6 @@ body {
     z-index: 10;
 }
 
-/* --- GRID LAYOUT --- */
 .profile-grid {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -38,12 +37,11 @@ body {
     align-items: start;
 }
 
-/* --- CARTES GÉNÉRIQUES --- */
 .profile-card {
-    background: white;
+    background: var(--white);
     border-radius: 16px;
     padding: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
     margin-bottom: 25px;
 }
 
@@ -51,7 +49,6 @@ body {
     text-align: center;
 }
 
-/* --- SIDEBAR (Photo & Actions) --- */
 .avatar-container {
     position: relative;
     width: 120px;
@@ -64,7 +61,7 @@ body {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #f4f7f6;
+    border: 4px solid var(--bg-body);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
@@ -72,8 +69,8 @@ body {
     position: absolute;
     bottom: 0;
     right: 0;
-    background: #28B463;
-    color: white;
+    background: var(--primary-green);
+    color: var(--white);
     border: none;
     width: 36px;
     height: 36px;
@@ -87,19 +84,19 @@ body {
 }
 
 .edit-avatar-btn:hover {
-    background: #1D8348;
+    background: var(--dark-green);
     transform: scale(1.1);
 }
 
 .profile-name {
     margin: 0;
     font-size: 22px;
-    color: #1e293b;
+    color: var(--text-main);
 }
 
 .profile-nickname {
     margin: 5px 0 15px 0;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 15px;
 }
 
@@ -107,22 +104,21 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #f1f5f9;
+    background: var(--bg-body);
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 13px;
-    color: #475569;
+    color: var(--text-muted);
     font-weight: 500;
 }
 
 .profile-divider {
     border: 0;
     height: 1px;
-    background: #e2e8f0;
+    background: var(--border-color);
     margin: 25px 0;
 }
 
-/* BOUTONS SIDEBAR */
 .btn-profile {
     display: flex;
     align-items: center;
@@ -140,28 +136,27 @@ body {
 }
 
 .btn-outline {
-    background: white;
-    color: #28B463;
-    border: 2px solid #28B463;
+    background: var(--white);
+    color: var(--primary-green);
+    border: 2px solid var(--primary-green);
 }
 
 .btn-outline:hover {
-    background: #f0fdf4;
+    background: var(--success-bg);
     transform: translateY(-2px);
 }
 
 .btn-danger {
-    background: white;
-    color: #ef4444;
-    border: 2px solid #ef4444;
+    background: var(--white);
+    color: var(--primary-red);
+    border: 2px solid var(--primary-red);
 }
 
 .btn-danger:hover {
-    background: #fef2f2;
+    background: var(--error-bg);
     transform: translateY(-2px);
 }
 
-/* --- STATISTIQUES --- */
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -170,21 +165,21 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: var(--white);
     border-radius: 16px;
     padding: 20px;
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 
 .stat-icon {
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    background: #dcfce7;
-    color: #16a34a;
+    background: var(--success-bg);
+    color: var(--success-text);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -199,28 +194,27 @@ body {
 .stat-number {
     font-size: 24px;
     font-weight: bold;
-    color: #1e293b;
+    color: var(--text-main);
 }
 
 .stat-label {
     font-size: 13px;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
-/* --- LISTES D'INFORMATIONS --- */
 .card-header-profile h4 {
     margin: 0 0 20px 0;
-    color: #1e293b;
+    color: var(--text-main);
     font-size: 18px;
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 15px;
 }
 
 .card-header-profile h4 i {
-    color: #28B463;
+    color: var(--primary-green);
 }
 
 .info-list {
@@ -232,7 +226,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 12px 0;
-    border-bottom: 1px dashed #e2e8f0;
+    border-bottom: 1px dashed var(--border-color);
 }
 
 .info-item:last-child {
@@ -242,7 +236,7 @@ body {
 
 .info-label {
     font-size: 13px;
-    color: #64748b;
+    color: var(--text-muted);
     margin-bottom: 5px;
     display: flex;
     align-items: center;
@@ -251,10 +245,9 @@ body {
 
 .info-value {
     font-size: 16px;
-    color: #1e293b;
+    color: var(--text-main);
     font-weight: 500;
 }
-
 
 @media (max-width: 768px) {
     .profile-grid {

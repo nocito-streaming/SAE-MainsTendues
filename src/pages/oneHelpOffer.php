@@ -21,11 +21,12 @@ if ($idR) {
         global $db;
         
         // Jointure pour récupérer l'annonce, la ville associée et les infos du demandeur
-        $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName 
+        $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName, User.email 
                 FROM HelpRequests 
                 INNER JOIN Address ON HelpRequests.idAdr = Address.idAdr
                 INNER JOIN InNeed ON HelpRequests.inNeed_id = InNeed.user_id
                 INNER JOIN defUser ON InNeed.user_id = defUser.user_id
+                INNER JOIN User ON defUser.user_id = User.user_id
                 WHERE HelpRequests.idR = :idR";
         
         $stmt = $db->prepare($sql);
@@ -60,7 +61,7 @@ if ($idR) {
 // Traitement de la proposition d'aide (Envoi d'email via Resend)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $FirstMessage = $_POST['firstMessage'];
-    $email = "snt.thom@gmail.com";
+    $email = $r['email']; 
     $req_title = "Nouveau demande d'aide";
     $result = sendEmailFirstMessage($FirstMessage, $email, $req_title);
     if ($result) {
@@ -74,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
 }
 ?>
 
+<link rel="stylesheet" href="assets/css/variables.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="assets/css/oneHelpOffer.css">
 

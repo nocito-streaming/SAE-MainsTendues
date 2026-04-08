@@ -114,6 +114,18 @@ function deleteUser($userId) {
         return false;
     }
 }
+function addUserToAdmin($userId){
+    global $db;
+    try{
+        $stmt = $db->prepare("INSERT INTO Admin(user_id) VALUES(:user_id)");
+        $stmt->execute([
+            "user_id" => $userId
+        ]);
+        return true;
+    } catch (PDOException $e){
+        return false;
+    }
+}
 function deleteHelpRequest($helpRequestId) {
     global $db;
     try{

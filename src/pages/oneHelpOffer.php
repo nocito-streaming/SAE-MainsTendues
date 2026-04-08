@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
 
     $emailData = [
         'from'    => 'onboarding@resend.dev',
-        'to'      => 'snt.thom@gmail.com',
+        'to'      => ['snt.thom@gmail.com'],
         'subject' => 'Nouvelle proposition d\'aide : ' . $req_title,
         'html'    => '
             <p><strong>Message de l\'intervenant :</strong></p>
@@ -75,24 +75,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     ];
 
     $ch = curl_init('https://api.resend.com/emails');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => json_encode($emailData),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $apiKey,
-            'Content-Type: application/json'
-        ],
-        CURLOPT_CONNECTTIMEOUT => 5, // Évite de bloquer le script si l'API est injoignable
-        CURLOPT_TIMEOUT        => 10,
-        CURLOPT_SSL_VERIFYPEER => false, // Désactivé pour compatibilité avec le pare-feu local
-    ]);
-
+    $options = array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode($emailData),
+            CURLOPT_HTTPHEADER     => [
+                    'Authorization: Bearer ' . $apiKey,
+                    'Content-Type: application/json'
+            ],
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 30,
+    );
+    curl_setopt_array($ch, $options);
+    curl_setopt($ch, CURLOPT_PROXY, 'http://cache.univ-pau.fr:3128');
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlError = curl_error($ch); 
+    $curlError = curl_error($ch);
     curl_close($ch);
-
     if ($httpCode == 200 || $httpCode == 201) {
         $message_success = true;
     } else {

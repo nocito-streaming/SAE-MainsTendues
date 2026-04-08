@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $user_id = $_SESSION['user_id'] ?? null;
 require_once('./src/db_config.php');
+require_once('./src/functions.php');
 
 $idR = $_GET['idR'] ?? null;
 $message_success = false;
@@ -58,47 +59,16 @@ if ($idR) {
 
 // Traitement de la proposition d'aide (Envoi d'email via Resend)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
-    
-    // TODO: Placer cette clé dans un fichier .env avant la mise en production
-    $apiKey = 're_c9Z3Ny99_5kLsSB5gwVihJ3QoEuuBLdYi'; 
-
-    $emailData = [
-        'from'    => 'onboarding@resend.dev',
-        'to'      => ['snt.thom@gmail.com'],
-        'subject' => 'Nouvelle proposition d\'aide : ' . $req_title,
-        'html'    => '
-            <p><strong>Message de l\'intervenant :</strong></p>
-            <blockquote style="border-left: 4px solid #ccc; padding-left: 10px;">' 
-            . nl2br(htmlspecialchars($_POST['firstMessage'])) . 
-            '</blockquote>
-        '
-    ];
-
-    $ch = curl_init('https://api.resend.com/emails');
-    $options = array(
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST           => true,
-            CURLOPT_POSTFIELDS     => json_encode($emailData),
-            CURLOPT_HTTPHEADER     => [
-                    'Authorization: Bearer ' . $apiKey,
-                    'Content-Type: application/json'
-            ],
-            CURLOPT_CONNECTTIMEOUT => 5,
-            CURLOPT_TIMEOUT        => 30,
-    );
-    curl_setopt_array($ch, $options);
-    curl_setopt($ch, CURLOPT_PROXY, 'http://cache.univ-pau.fr:3128');
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlError = curl_error($ch);
-    curl_close($ch);
-    if ($httpCode == 200 || $httpCode == 201) {
+    $FirstMessage = $_POST['firstMessage'];
+    $email = "snt.thom@gmail.com";
+    $req_title = "Nouveau demande d'aide";
+    $result = sendEmailFirstMessage($FirstMessage, $email, $req_title);
+    if ($result) {
         $message_success = true;
     } else {
         echo "<div style='color:red; background:white; padding:10px;'>";
         echo "<strong>Erreur d'envoi API :</strong><br>";
-        echo "Code HTTP : " . $httpCode . "<br>";
-        echo "Erreur Curl : " . $curlError;
+        echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
         echo "</div>";
     }
 }

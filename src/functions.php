@@ -126,3 +126,42 @@ function deleteHelpRequest($helpRequestId) {
         return false;
     }
 }
+function sendEmailFirstMessage($FirstMessage, $email, $req_title): bool{
+    // TODO: Placer cette clé dans un fichier .env avant la mise en production
+    $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d';
+    $emailData = [
+        'from'    => 'onboarding@resend.dev',
+        'to'      => [$email],
+        'subject' => 'Nouvelle proposition d\'aide : ' . $req_title,
+        'html'    => '
+            <p><strong>Message de l\'intervenant :</strong></p>
+            <blockquote style="border-left: 4px solid #ccc; padding-left: 10px;">'
+            . $FirstMessage .
+            '</blockquote>
+        '
+    ];
+
+    $ch = curl_init('https://api.resend.com/emails');
+    $options = array(
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($emailData),
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json'
+        ],
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT        => 30,
+    );
+    curl_setopt_array($ch, $options);
+    curl_setopt($ch, CURLOPT_PROXY, 'http://cache.univ-pau.fr:3128');
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
+    curl_close($ch);
+    if ($httpCode == 200 || $httpCode == 201) {
+        return true;
+    } else {
+        return false;
+    }
+};

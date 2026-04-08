@@ -142,7 +142,7 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title): bool{
     // TODO: Placer cette clé dans un fichier .env avant la mise en production
     $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d';
     $emailData = [
-        'from'    => 'onboarding@resend.dev',
+        'from'    => 'contact@mainstendues.cloud-ip.cc',
         'to'      => [$email],
         'subject' => 'Nouvelle proposition d\'aide : ' . $req_title,
         'html'    => '

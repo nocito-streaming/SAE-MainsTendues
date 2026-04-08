@@ -1,12 +1,14 @@
+/* offerHelp.css */
+
 body {
-    background-color: #f4f7f6;
+    background-color: var(--bg-body);
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .page-header {
-    background: linear-gradient(135deg, #28B463, #1D8348);
-    color: white;
+    background: var(--gradient-primary);
+    color: var(--white);
     padding: 60px 20px;
     text-align: center;
     margin-bottom: -40px;
@@ -33,10 +35,10 @@ body {
 }
 
 .filter-section {
-    background: white;
+    background: var(--white);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     margin-bottom: 40px;
 }
 
@@ -58,32 +60,32 @@ body {
 .input-group i {
     position: absolute;
     left: 15px;
-    color: #94a3b8;
+    color: var(--text-muted); 
 }
 
 .filter-form input[type="text"],
 .filter-form select {
     width: 100%;
     padding: 14px 15px 14px 40px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 15px;
     outline: none;
-    background-color: #f8fafc;
+    background-color: var(--bg-light); 
     transition: all 0.3s;
 }
 
 .filter-form input[type="text"]:focus,
 .filter-form select:focus {
-    border-color: #28B463;
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(40, 180, 99, 0.1);
+    border-color: var(--primary-green);
+    background-color: var(--white);
+    box-shadow: var(--focus-ring); 
 }
 
 .btn-filter {
     padding: 14px 28px;
-    background-color: #28B463;
-    color: white;
+    background-color: var(--primary-green);
+    color: var(--white);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -98,14 +100,14 @@ body {
 }
 
 .btn-filter:hover {
-    background-color: #1D8348;
+    background-color: var(--dark-green);
     transform: translateY(-2px);
 }
 
 .btn-reset {
     padding: 14px 18px;
-    background-color: #f1f5f9;
-    color: #64748b;
+    background-color: var(--bg-body); 
+    color: var(--text-muted);
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s;
@@ -115,8 +117,8 @@ body {
 }
 
 .btn-reset:hover {
-    background-color: #e2e8f0;
-    color: #ef4444;
+    background-color: var(--border-color);
+    color: var(--primary-red);
 }
 
 .grid-container {
@@ -128,20 +130,20 @@ body {
 .request-card {
     display: flex;
     flex-direction: column;
-    background: white;
+    background: var(--white);
     border-radius: 16px;
     padding: 25px;
     text-decoration: none;
-    color: #1e293b;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
-    border: 1px solid #f1f5f9;
+    color: var(--text-main);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--bg-body); 
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .request-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    border-color: #e2e8f0;
+    border-color: var(--border-color);
 }
 
 .card-header {
@@ -169,18 +171,18 @@ body {
 }
 
 .badge-green {
-    background: #dcfce7;
-    color: #16a34a;
+    background: var(--success-bg); 
+    color: var(--success-text); 
 }
 
 .badge-blue {
-    background: #eef2ff;
-    color: #4f46e5;
+    background: var(--badge-blue-bg); 
+    color: var(--badge-blue-text);
 }
 
 .badge-red {
-    background: #fff1f2;
-    color: #e11d48;
+    background: var(--error-bg); 
+    color: var(--primary-red); 
 }
 
 .card-body {
@@ -190,21 +192,21 @@ body {
 .card-title {
     margin: 0 0 10px 0;
     font-size: 18px;
-    color: #0f172a;
+    color: var(--text-dark); 
 }
 
 .card-desc {
     margin: 0;
     font-size: 15px;
     line-height: 1.6;
-    color: #64748b;
+    color: var(--text-muted);
     font-style: italic;
 }
 
 .card-divider {
     border: 0;
     height: 1px;
-    background: #f1f5f9;
+    background: var(--bg-body); 
     margin: 20px 0;
 }
 
@@ -216,7 +218,7 @@ body {
 
 .card-timestamp {
     font-size: 13px;
-    color: #94a3b8;
+    color: var(--text-muted);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -225,7 +227,7 @@ body {
 .card-btn-mock {
     font-size: 14px;
     font-weight: 600;
-    color: #28B463;
+    color: var(--primary-green);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -240,14 +242,13 @@ body {
     grid-column: 1 / -1;
     text-align: center;
     padding: 80px 20px;
-    background: white;
+    background: var(--white);
     border-radius: 12px;
-    color: #94a3b8;
-    border: 2px dashed #e2e8f0;
+    color: var(--text-muted);
+    border: 2px dashed var(--border-color);
 }
 
 .no-results i {
-    color: #cbd5e1;
+    color: var(--border-color); 
     margin-bottom: 15px;
 }
-

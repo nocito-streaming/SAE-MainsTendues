@@ -57,18 +57,22 @@ if ($idR) {
 } else {
     die("Aucune annonce sélectionnée.");
 }
-
 // Traitement de la proposition d'aide (Envoi d'email via Resend)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $FirstMessage = $_POST['firstMessage'];
     $email = $r['email']; 
-    $req_title = "Nouveau demande d'aide";
-    $result = sendEmailFirstMessage($FirstMessage, $email, $req_title);
+    
+    // NOUVEAU : On extrait le prénom pour l'envoyer à la fonction
+    $req_firstName = explode(' ', $req_name)[0]; 
+    
+    // NOUVEAU : On appelle la fonction avec les 4 paramètres (ajout de $req_firstName)
+    $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
+    
     if ($result) {
         $message_success = true;
     } else {
-        echo "<div style='color:red; background:white; padding:10px;'>";
-        echo "<strong>Erreur d'envoi API :</strong><br>";
+        echo "<div style='color:red; background:white; padding:10px; border-radius: 5px; margin-bottom: 15px;'>";
+        echo "<strong>Erreur d'envoi :</strong><br>";
         echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
         echo "</div>";
     }

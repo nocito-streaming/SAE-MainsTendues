@@ -13,7 +13,6 @@ require_once('./src/db_config.php');
 require_once('./src/functions.php');
 
 $idR = $_GET['idR'] ?? null;
-$message_success = false;
 
 // Récupération des données de l'annonce
 if ($idR) {
@@ -57,22 +56,91 @@ if ($idR) {
 } else {
     die("Aucune annonce sélectionnée.");
 }
+
 // Traitement de la proposition d'aide (Envoi d'email via Resend)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $FirstMessage = $_POST['firstMessage'];
     $email = $r['email']; 
     
-    // NOUVEAU : On extrait le prénom pour l'envoyer à la fonction
     $req_firstName = explode(' ', $req_name)[0]; 
     
-    // NOUVEAU : On appelle la fonction avec les 4 paramètres (ajout de $req_firstName)
     $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
     
     if ($result) {
-        $message_success = true;
+        // Redirection avec page de succès dynamique
+        ?>
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content="4;url=index.php?page=offerHelp">
+            <link rel="stylesheet" href="assets/css/variables.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            <style>
+                .success-page {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 50vh;
+                    text-align: center;
+                    padding: 40px 20px;
+                }
+                .success-icon-large {
+                    font-size: 5rem;
+                    color: #3498db; /* Bleu pour l'envoi de message */
+                    margin-bottom: 20px;
+                    animation: popIn 0.5s ease-out;
+                }
+                .redirect-text {
+                    color: #7f8c8d;
+                    margin-top: 20px;
+                    font-size: 1.1rem;
+                }
+                @keyframes popIn {
+                    0% { transform: scale(0); opacity: 0; }
+                    80% { transform: scale(1.1); }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="success-page">
+                <i class="fas fa-paper-plane success-icon-large"></i>
+                <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !</h2>
+                <p style="color: #34495e; font-size: 1.1rem; line-height: 1.5; max-width: 600px;">
+                    Merci pour votre solidarité ! Votre proposition a bien été transmise à <strong><?php echo htmlspecialchars($req_firstName); ?></strong>.
+                </p>
+                
+                <div class="redirect-text">
+                    <i class="fas fa-spinner fa-spin"></i> Retour aux annonces dans <strong id="countdown">4</strong> secondes...
+                </div>
+                
+                <a href="index.php?page=offerHelp" class="btn-submit" style="display: inline-block; width: auto; margin-top: 25px; padding: 12px 30px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px;">
+                    Retourner aux annonces immédiatement
+                </a>
+            </div>
+
+            <script>
+                let seconds = 4;
+                const countdownElement = document.getElementById('countdown');
+                const interval = setInterval(function() {
+                    seconds--;
+                    if (seconds >= 0) {
+                        countdownElement.textContent = seconds;
+                    }
+                    if (seconds <= 0) {
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            </script>
+        </body>
+        </html>
+        <?php
+        exit;
     } else {
-        echo "<div style='color:red; background:white; padding:10px; border-radius: 5px; margin-bottom: 15px;'>";
-        echo "<strong>Erreur d'envoi :</strong><br>";
+        echo "<div style='color:#cc0000; background:#ffcccc; padding:15px; border-radius: 5px; margin: 20px auto; max-width: 800px; text-align: center;'>";
+        echo "<strong><i class='fas fa-exclamation-triangle'></i> Erreur d'envoi :</strong><br>";
         echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
         echo "</div>";
     }
@@ -95,12 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     <a href="index.php?page=offerHelp" class="btn-back">
         <i class="fas fa-arrow-left"></i> Retour aux annonces
     </a>
-
-    <?php if ($message_success): ?>
-        <div class="alert-success">
-            <i class="fas fa-check-circle"></i> Votre proposition d'aide a bien été envoyée à <?php echo explode(' ', $req_name)[0]; ?> !
-        </div>
-    <?php endif; ?>
 
     <div class="detail-grid">
         <div class="detail-main">
@@ -158,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                     <h3>Proposer mon aide</h3>
                     <p class="action-desc">Envoyez un petit message à <?php echo explode(' ', $req_name)[0]; ?> pour lui dire comment vous pouvez l'aider.</p>
                     
-                    <form method="POST" action="index.php?page=oneHelpOffer&idR=<?php echo $idR; ?>" class="proposal-form">
+                    <form method="POST" action="index.php?page=oneHelpOffer&idR=<?php echo htmlspecialchars($idR); ?>" class="proposal-form">
                         <div class="form-group">
                             <textarea name="firstMessage" rows="5" placeholder="Bonjour, je suis disponible ce samedi pour vous aider avec..." required></textarea>
                         </div>

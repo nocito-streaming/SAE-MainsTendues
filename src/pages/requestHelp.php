@@ -45,128 +45,210 @@ if (!$user_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Récupération des données avec correction des noms des variables (title et postalCode)
+    $title = trim($_POST["title"] ?? ""); 
     $hType = trim($_POST["hType"] ?? "");
     $hType_other = trim($_POST["hType_other"] ?? "");
     $urgency = trim($_POST["urgency"] ?? "");
     $content = trim($_POST["content"] ?? "");
-    $postal_code = trim($_POST["postal_code"] ?? "");
+    $postal_code = trim($_POST["postalCode"] ?? ""); // Correction ici : correspond au name="postalCode"
     $homeN = trim($_POST["homeN"] ?? "");
     $street = trim($_POST["street"] ?? "");
     $city = trim($_POST["city"] ?? "");
+
+    // Logique pour le type d'aide "Autre"
+    $finalType = ($hType === "Autre") ? $hType_other : $hType;
+
+    // Insertion de l'adresse
     $insertAdr = addAddress($city, $postal_code, $street, $homeN);
+    
     if ($insertAdr === true) {
         $adrId = $db->lastInsertId();
-        $result = addHelpRequest($hType, $content, $urgency, $user_id, $adrId);
+        // Vérifie que ta fonction addHelpRequest prend bien le $title en paramètre si besoin dans ta base de données !
+        $result = addHelpRequest($finalType, $content, $urgency, $user_id, $adrId);
+        
         if ($result === true) {
-            //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
-            echo "La Demande d'aide a ete ajoute avec succes.";
-            //INSTEAD OF SIMPLE ECHO WE SHOULD ADD SOME INTERACTIVE TEXT INFORMING THE USER ABOUT SUCCES
+            ?>
+            <!DOCTYPE html>
+            <html lang="fr">
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="refresh" content="4;url=index.php">
+                <link rel="stylesheet" href="./assets/css/variables.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                <link rel="stylesheet" href="./assets/css/requestHelp.css">
+                <style>
+                    .success-page {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 50vh;
+                        text-align: center;
+                        padding: 40px 20px;
+                    }
+                    .success-icon-large {
+                        font-size: 5rem;
+                        color: #2ecc71; /* Vert de succès */
+                        margin-bottom: 20px;
+                        animation: popIn 0.5s ease-out;
+                    }
+                    .redirect-text {
+                        color: #7f8c8d;
+                        margin-top: 20px;
+                        font-size: 1.1rem;
+                    }
+                    @keyframes popIn {
+                        0% { transform: scale(0); opacity: 0; }
+                        80% { transform: scale(1.1); }
+                        100% { transform: scale(1); opacity: 1; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="wrap success-page">
+                    <div class="form-container" style="max-width: 600px; margin: 0 auto; padding: 40px;">
+                        <i class="fas fa-check-circle success-icon-large"></i>
+                        <h2 style="color: #2c3e50; margin-bottom: 15px;">Demande publiée avec succès !</h2>
+                        <p style="color: #34495e; font-size: 1.1rem; line-height: 1.5;">
+                            Merci ! Votre demande d'aide a bien été enregistrée et sera bientôt visible par nos bénévoles.
+                        </p>
+                        
+                        <div class="redirect-text">
+                            <i class="fas fa-spinner fa-spin"></i> Vous allez être redirigé vers l'accueil dans <strong id="countdown">4</strong> secondes...
+                        </div>
+                        
+                        <a href="index.php" class="btn-submit" style="display: inline-block; width: auto; margin-top: 25px; padding: 12px 30px;">
+                            Retourner à l'accueil immédiatement
+                        </a>
+                    </div>
+                </div>
+
+                <script>
+                    // script pour animer le compte à rebours
+                    let seconds = 4;
+                    const countdownElement = document.getElementById('countdown');
+                    
+                    const interval = setInterval(function() {
+                        seconds--;
+                        if (seconds >= 0) {
+                            countdownElement.textContent = seconds;
+                        }
+                        if (seconds <= 0) {
+                            clearInterval(interval);
+                        }
+                    }, 1000);
+                </script>
+            </body>
+            </html>
+            <?php
             exit;
         } else {
             $error = $result;
-            echo $error;
+            echo '<div class="alert-danger" style="text-align:center; padding:15px; margin:20px; background-color:#ffcccc; color:#cc0000; border-radius:5px;">Erreur : ' . htmlspecialchars($error) . '</div>';
         }
+    } else {
+        echo '<div class="alert-danger" style="text-align:center; padding:15px; margin:20px; background-color:#ffcccc; color:#cc0000; border-radius:5px;">Erreur lors de l\'ajout de l\'adresse.</div>';
     }
 }
 ?>
-    <link rel="stylesheet" href="./assets/css/variables.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/requestHelp.css">
-    
-    <div class="page-header">
-        <div class="header-content">
-            <h2>Demander de l'aide</h2>
-            <p>Remplissez ce formulaire simplement. Nos bénévoles sont là pour vous accompagner au quotidien.</p>
-        </div>
-    </div>
+<link rel="stylesheet" href="./assets/css/variables.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="./assets/css/requestHelp.css">
 
-    <div class="wrap">
-        <div class="form-container">
-            <div class="form-icon">
-                <i class="fas fa-hand-holding-heart"></i>
+<div class="page-header">
+    <div class="header-content">
+        <h2>Demander de l'aide</h2>
+        <p>Remplissez ce formulaire simplement. Nos bénévoles sont là pour vous accompagner au quotidien.</p>
+    </div>
+</div>
+
+<div class="wrap">
+    <div class="form-container">
+        <div class="form-icon">
+            <i class="fas fa-hand-holding-heart"></i>
+        </div>
+
+        <form action="index.php?page=requestHelp" method="POST" class="help-form">
+
+            <div class="form-group">
+                <label for="title"> Titre de votre demande</label>
+                <input type="text" name="title" id="title" maxlength="40" placeholder="Ex : Besoin d'aide pour mes courses" required>
             </div>
 
-            <form action="index.php?page=requestHelp" method="POST" class="help-form">
+            <div class="form-group">
+                <label for="hType"> De quel type d'aide avez-vous besoin ?</label>
+                <select name="hType" id="hType" required onchange="toggleOtherInput(this)">
+                    <option value="" disabled selected>Choisissez une catégorie...</option>
+                    <option value="Courses">Courses</option>
+                    <option value="Compagnie">Compagnie</option>
+                    <option value="Bricolage">Bricolage</option>
+                    <option value="Jardinage">Jardinage</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Autre">Autre (Précisez)</option>
+                </select>
 
-                <div class="form-group">
-                    <label for="title"> Titre de votre demande</label>
-                    <input type="text" name="title" id="title" maxlength="40" placeholder="Ex : Besoin d'aide pour mes courses" required>
-                </div>
+                <label for="urgency" style="margin-top: 15px;">Quel est le degré d'urgence de votre demande ?</label>
+                <select name="urgency" id="urgency" required>
+                    <option value="" disabled selected>Choisissez un niveau d'urgence...</option>
+                    <option value="Faible">Faible</option>
+                    <option value="Moyen">Moyen</option>
+                    <option value="Élevé">Élevé</option>
+                </select>
 
-                <div class="form-group">
-                    <label for="hType"> De quel type d'aide avez-vous besoin ?</label>
-                    <select name="hType" id="hType" required onchange="toggleOtherInput(this)">
-                        <option value="" disabled selected>Choisissez une catégorie...</option>
-                        <option value="Courses">Courses</option>
-                        <option value="Compagnie">Compagnie</option>
-                        <option value="Bricolage">Bricolage</option>
-                        <option value="Jardinage">Jardinage</option>
-                        <option value="Informatique">Informatique</option>
-                        <option value="Autre">Autre (Précisez)</option>
-                    </select>
+                <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
+            </div>
+            <div class="address-section" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
+                <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
+                    Lieu de l'intervention
+                </h3>
 
-                    <label for="urgency" style="margin-top: 15px;">Quel est le degré d'urgence de votre demande ?</label>
-                    <select name="urgency" id="urgency" required>
-                        <option value="" disabled selected>Choisissez un niveau d'urgence...</option>
-                        <option value="Faible">Faible</option>
-                        <option value="Moyen">Moyen</option>
-                        <option value="Élevé">Élevé</option>
-                    </select>
-
-                    <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
-                </div>
-                <div class="address-section" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
-                    <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
-                        Lieu de l'intervention
-                    </h3>
-
-                    <div class="form-row">
-                        <div class="form-group" style="flex: 1; padding-right: 10px;">
-                            <label for="homeN">N° bat</label>
-                            <input type="text" name="homeN" id="homeN" placeholder="Ex: 12B">
-                        </div>
-
-                        <div class="form-group" style="flex: 3;">
-                            <label for="street">Nom de la rue</label>
-                            <input type="text" name="street" id="street" placeholder="Ex: Avenue des Mésanges" required>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1; padding-right: 10px;">
+                        <label for="homeN">N° bat</label>
+                        <input type="text" name="homeN" id="homeN" placeholder="Ex: 12B">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group half" style="padding-right: 10px;">
-                            <label for="postalCode">Code postal</label>
-                            <input type="text" name="postalCode" id="postalCode" placeholder="Ex: 64600" required>
-                        </div>
-                        <div class="form-group half">
-                            <label for="city">Ville</label>
-                            <input type="text" name="city" id="city" value="Anglet" required>
-                        </div>
+
+                    <div class="form-group" style="flex: 3;">
+                        <label for="street">Nom de la rue</label>
+                        <input type="text" name="street" id="street" placeholder="Ex: Avenue des Mésanges" required>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="content"> Description de votre besoin</label>
-                    <textarea name="content" id="content" rows="5" placeholder="Expliquez brièvement ce dont vous avez besoin. Par exemple : 'J'aurais besoin d'aide pour tondre ma pelouse ce week-end...'" required></textarea>
+                <div class="form-row">
+                    <div class="form-group half" style="padding-right: 10px;">
+                        <label for="postalCode">Code postal</label>
+                        <input type="text" name="postalCode" id="postalCode" placeholder="Ex: 64600" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="city">Ville</label>
+                        <input type="text" name="city" id="city" placeholder="Anglet" required>
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" class="btn-submit">
-                    <i class="fas fa-paper-plane"></i> Publier ma demande
-                </button>
-            </form>
-        </div>
+            <div class="form-group">
+                <label for="content"> Description de votre besoin</label>
+                <textarea name="content" id="content" rows="5" placeholder="Expliquez brièvement ce dont vous avez besoin. Par exemple : 'J'aurais besoin d'aide pour tondre ma pelouse ce week-end...'" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Publier ma demande
+            </button>
+        </form>
     </div>
+</div>
 
-    <script>
-        function toggleOtherInput(selectElement) {
-            const otherInput = document.getElementById('hType_other');
+<script>
+    function toggleOtherInput(selectElement) {
+        const otherInput = document.getElementById('hType_other');
 
-            if (selectElement.value === 'Autre') {
-                otherInput.style.display = 'block';
-                otherInput.setAttribute('required', 'required');
-            } else {
-                otherInput.style.display = 'none';
-                otherInput.removeAttribute('required');
-                otherInput.value = '';
-            }
+        if (selectElement.value === 'Autre') {
+            otherInput.style.display = 'block';
+            otherInput.setAttribute('required', 'required');
+        } else {
+            otherInput.style.display = 'none';
+            otherInput.removeAttribute('required');
+            otherInput.value = '';
         }
-
-    </script>
+    }
+</script>

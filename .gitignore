@@ -1,8 +1,11 @@
-db_config.php
-
+# IDE et Editeurs
 .idea/
 .vscode/
 .DS_Store
 Thumbs.db
 
+# Configuration Sensible
+src/db_config.php
+
+# Logs et temporaires
 *.log

@@ -55,7 +55,7 @@ if ($view === 'users') {
 <div class="admin-layout">
     <nav class="admin-sidebar">
         <div class="sidebar-header">
-            <h3><i class="fas fa-hands-helping" style="color: #28B463; margin-right: 8px;"></i> MainsTendues</h3>
+            <h3></i> MainsTendues</h3>
         </div>
         <ul class="nav-links">
             <li class="<?php echo $view === 'requests' ? 'active' : ''; ?>">

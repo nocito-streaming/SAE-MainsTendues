@@ -11,11 +11,13 @@
 <body>
     <header class="main-header">
         <div class="logo-container">
-            <img src="./assets/images/LogoMainsTendues.png" alt="Logo Mains Tendues" class="logo-img"/>
-            <div class="logo-text">
-                <h1>Mains Tendues</h1>
-                <p>Main dans la main, pour un meilleur demain</p>
-            </div>
+            <a href="index.php?page=home" class="logo-link">
+                <img src="./assets/images/LogoMainsTendues.png" alt="Logo Mains Tendues" class="logo-img"/>
+                <div class="logo-text">
+                    <h1>Mains Tendues</h1>
+                    <p>Main dans la main, pour un meilleur demain</p>
+                </div>
+            </a>
         </div>
 
         <div class="hamburger" id="hamburger">

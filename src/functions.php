@@ -138,19 +138,49 @@ function deleteHelpRequest($helpRequestId) {
         return false;
     }
 }
-function sendEmailFirstMessage($FirstMessage, $email, $req_title): bool{
+
+function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName): bool{
     // TODO: Placer cette clé dans un fichier .env avant la mise en production
     $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d';
+    
+    $safeMessage = nl2br(htmlspecialchars($FirstMessage));
+    $safeTitle = htmlspecialchars($req_title);
+    $safeName = htmlspecialchars($req_firstName);
+
+    // Construction de l'email HTML "Anti-Spam"
+    $htmlContent = '
+    <div style="font-family: Arial, sans-serif; color: #333333; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <p>Bonjour <strong>' . $safeName . '</strong>,</p>
+        <p>J\'espère que vous allez bien.</p>
+        <p>Vous recevez ce message car vous avez publié une demande d\'aide (<strong>' . $safeTitle . '</strong>) sur la plateforme <em>Mains Tendues</em>.</p>
+        
+        <p>Une personne formidable vient de vous envoyer une proposition d\'aide ! Voici son message :</p>
+        
+        <blockquote style="border-left: 4px solid #4CAF50; background-color: #f9f9f9; padding: 15px; margin: 20px 0; font-style: italic; border-radius: 4px;">
+            ' . $safeMessage . '
+        </blockquote>
+        
+        <p>Pour lui répondre et organiser votre échange, veuillez vous connecter à votre compte :</p>
+        
+        <div style="text-align: center; margin: 35px 0;">
+            <a href="https://mainstendues.cloud-ip.cc/index.php?page=login" style="background-color: #2563eb; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Voir ma messagerie</a>
+        </div>
+        
+        <p>À très vite,<br><strong>L\'équipe Mains Tendues</strong></p>
+        
+        <hr style="border: none; border-top: 1px solid #eeeeee; margin: 30px 0;">
+        
+        <p style="font-size: 12px; color: #888888; text-align: center;">
+            Vous recevez cet e-mail car vous êtes inscrit(e) sur Mains Tendues.<br>
+            Si vous avez trouvé de l\'aide ou souhaitez fermer cette demande, <a href="https://mainstendues.cloud-ip.cc/index.php?page=myRequests" style="color: #888888; text-decoration: underline;">gérez vos annonces ici</a>.
+        </p>
+    </div>';
+
     $emailData = [
-        'from'    => 'contact@mainstendues.cloud-ip.cc',
+        'from'    => 'Mains Tendues <contact@mainstendues.cloud-ip.cc>', // Ajout du nom de l'expéditeur
         'to'      => [$email],
-        'subject' => 'Nouvelle proposition d\'aide : ' . $req_title,
-        'html'    => '
-            <p><strong>Message de l\'intervenant :</strong></p>
-            <blockquote style="border-left: 4px solid #ccc; padding-left: 10px;">'
-            . $FirstMessage .
-            '</blockquote>
-        '
+        'subject' => 'Quelqu\'un propose de vous aider pour : ' . $safeTitle, // Objet plus naturel
+        'html'    => $htmlContent
     ];
 
     $ch = curl_init('https://api.resend.com/emails');
@@ -166,14 +196,12 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title): bool{
         CURLOPT_TIMEOUT        => 15,
     );
     curl_setopt_array($ch, $options);
+    
     curl_setopt($ch, CURLOPT_PROXY, 'http://cache.univ-pau.fr:3128');
+    
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlError = curl_error($ch);
     curl_close($ch);
-    if ($httpCode == 200 || $httpCode == 201) {
-        return true;
-    } else {
-        return false;
-    }
-};
+    
+    return ($httpCode == 200 || $httpCode == 201);
+}

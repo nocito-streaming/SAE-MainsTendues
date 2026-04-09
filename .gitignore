@@ -1,1 +1,8 @@
+db_config.php
+
+.idea/
 .vscode/
+.DS_Store
+Thumbs.db
+
+*.log

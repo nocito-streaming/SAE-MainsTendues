@@ -8,7 +8,7 @@
         <div class="hero-content">
             <h1>MainsTendues</h1>
             <h3>Main dans la main, pour un meilleur demain</h3>
-            <p>Une plateforme solidaire pour mettre en relation les habitants de la région avec des bénévoles prêts à aider au quotidien.</p>
+            <p>Une plateforme solidaire pour mettre en relation les habitants du Pays Basque (Anglet, Bayonne, Biarritz) avec des bénévoles de la région prêts à aider au quotidien.</p>
             <div class="BOUBOU">
                 <a href="index.php?page=requestHelp" class="cta-button primary"><i class="fas fa-hand-holding-heart"></i> Demander de l'aide</a>
                 <a href="index.php?page=offerHelp" class="cta-button secondary"><i class="fas fa-hands-helping"></i> Proposer mon aide</a>
@@ -62,7 +62,7 @@
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="quote-text">"Gugu gaga "</p>
+                    <p class="quote-text">"Grâce à MainsTendues, j'ai trouvé quelqu'un pour m'aider à faire mes courses à Anglet quand j'étais blessé"</p>
                     <div class="testimonial-author">
                         <div class="author-avatar"><i class="fas fa-user-circle"></i></div>
                         <div class="author-info">

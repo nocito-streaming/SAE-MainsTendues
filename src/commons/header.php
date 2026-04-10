@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MainsTendues est la plateforme gratuite d'entraide locale. Demandez de l'aide pour vos courses et petits travaux ou devenez bénévole pour aider vos voisins.">
     <title>Plateforme d'Entraide</title>
     <link href="./src/commons/header.css" rel="stylesheet" type="text/css"/>
     <link href="./assets/css/style.css" rel="stylesheet" type="text/css"/>

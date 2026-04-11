@@ -163,7 +163,7 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName
         <p>Pour lui répondre et organiser votre échange, veuillez vous connecter à votre compte :</p>
         
         <div style="text-align: center; margin: 35px 0;">
-            <a href="https://mainstendues.cloud-ip.cc/index.php?page=login" style="background-color: #2563eb; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Voir ma messagerie</a>
+            <a href="https://mains-tendues.fr/index.php?page=login" style="background-color: #2563eb; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">Voir ma messagerie</a>
         </div>
         
         <p>À très vite,<br><strong>L\'équipe Mains Tendues</strong></p>
@@ -172,12 +172,12 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName
         
         <p style="font-size: 12px; color: #888888; text-align: center;">
             Vous recevez cet e-mail car vous êtes inscrit(e) sur Mains Tendues.<br>
-            Si vous avez trouvé de l\'aide ou souhaitez fermer cette demande, <a href="https://mainstendues.cloud-ip.cc/index.php?page=myRequests" style="color: #888888; text-decoration: underline;">gérez vos annonces ici</a>.
+            Si vous avez trouvé de l\'aide ou souhaitez fermer cette demande, <a href="https://mains-tendues.fr/index.php?page=myRequests" style="color: #888888; text-decoration: underline;">gérez vos annonces ici</a>.
         </p>
     </div>';
 
     $emailData = [
-        'from'    => 'Mains Tendues <contact@mainstendues.cloud-ip.cc>', // Ajout du nom de l'expéditeur
+        'from'    => 'Mains Tendues <contact@mains-tendues.fr>', // Ajout du nom de l'expéditeur
         'to'      => [$email],
         'subject' => 'Quelqu\'un propose de vous aider pour : ' . $safeTitle, // Objet plus naturel
         'html'    => $htmlContent

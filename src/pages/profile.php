@@ -17,7 +17,7 @@ $nbRequests = getNumberHelpRequestsByUser($user_id);
 $nbHelp = getNumberCompletedRequestsByUser($user_id);
 ?>
 
-<link rel="stylesheet" href="assets/css/variables.css">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/profile.css">
 
@@ -83,32 +83,37 @@ $nbHelp = getNumberCompletedRequestsByUser($user_id);
                 </div>
                 <div class="info-list">
                     <div class="info-item">
-                        <div class="info-label"><i class="fas fa-envelope"></i> Adresse e-mail</div>
-                        <div class="info-value"><?php echo $information[0]['email']?></div>
+                        <div class="info-labels ">
+                            <div class="info-label"><i class="fas fa-envelope"></i> Adresse e-mail</div>
+                            <div class="info-value"><?php echo $information[0]['email']?></div>
+                        </div>
+                        <button type="submit" class="btn-change" title="Supprimer"><i class="fas fa-pen"></i></button>
                     </div>
                     <div class="info-item">
-                        <div class="info-label"><i class="fas fa-phone"></i> Numéro de téléphone</div>
-                        <div class="info-value"><?php echo $information[0]['tel']?></div>
+                        <div class="info-labels">
+                            <div class="info-label"><i class="fas fa-phone"></i> Numéro de téléphone</div>
+                            <div class="info-value"><?php echo $information[0]['tel']?></div>
+                        </div>
+                        <button type="submit" class="btn-change" title="Supprimer"><i class="fas fa-pen"></i></button>
                     </div>
                 </div>
             </div>
 
             <div class="profile-card">
-                <div class="card-header-profile">
-                    <h4> Lieu de résidence</h4>
-                </div>
-                <div class="info-list">
-                    <div class="info-item">
-                        <div class="info-label"><i class="fas fa-home"></i> Domicile</div>
-                        <div class="info-value">
-                            <?php if($information[0]['idAdr'] !== 1){
-                                echo $information[0]['homeN'] . " " . $information[0]['street']?><br>
-                                <?php echo $information[0]['postalCode'] . " ". $information[0]['city'];
-                            } else {?>
-                            <p>Vous n'avez pas encore saisis address</p>
-                            <button class = "SCKMYCKC"> Ajouter maintenant!</button>>
-                            <?php }?>
-
+                    <div class="card-header-profile">
+                        <h4> Lieu de résidence<?php echo $information[0]['idAdr'] ?></h4>
+                    </div>
+                    <?php if($information[0]['idAdr'] == 1){ ?>
+                    <p>Vous n'avez pas encore saisis address</p>
+                    <button class = "SCKMYCKC"> Ajouter maintenant!</button>>
+                     <?php } else {?>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-home"></i> Domicile</div>
+                            <div class="info-value">
+                                <?php echo $information[0]['homeN'] . " " . $information[0]['street']?><br>
+                                    <?php echo $information[0]['postalCode'] . " ". $information[0]['city'];
+                }?>
                         </div>
                     </div>
                 </div>

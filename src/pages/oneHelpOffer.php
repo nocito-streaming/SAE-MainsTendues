@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
         <head>
             <meta charset="UTF-8">
             <meta http-equiv="refresh" content="4;url=index.php?page=offerHelp">
-            <link rel="stylesheet" href="assets/css/variables.css">
+            
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <style>
                 .success-page {
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
 }
 ?>
 
-<link rel="stylesheet" href="assets/css/variables.css">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="assets/css/oneHelpOffer.css">
 

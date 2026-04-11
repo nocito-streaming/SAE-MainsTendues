@@ -86,8 +86,7 @@ body {
 
 .icon-error {
     background: var(--primary-green);
-    border-color: var(--error-bg);
-    box-shadow: 0 4px 10px rgba(229, 36, 59, 0.2);
+    border-color: var(--primary-green);
 }
 
 .auth-container h3 {

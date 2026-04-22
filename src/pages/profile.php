@@ -88,14 +88,14 @@ $adr_info = getUserAddress($user_id);
                             <div class="info-label"><i class="fas fa-envelope"></i> Adresse e-mail</div>
                             <div class="info-value"><?php echo $information[0]['email']?></div>
                         </div>
-                        <button type="submit" class="btn-change" title="Supprimer"><i class="fas fa-pen"></i></button>
+                        <a href = "index.php?page=userParam&view=user_info" class="btn-change" title="Supprimer"><i class="fas fa-pen"></i></a>
                     </div>
                     <div class="info-item">
                         <div class="info-labels">
                             <div class="info-label"><i class="fas fa-phone"></i> Numéro de téléphone</div>
                             <div class="info-value" id="tel-text"><?php echo $information[0]['tel']?></div>
                         </div>
-                        <a type="button" class="btn-change" id="edit-btn" title="Modifier">
+                        <a class="btn-change" id="edit-btn" title="Modifier" href = "index.php?page=userParam&view=user_info">
                             <i class="fas fa-pen"></i>
                         </a>
                     </div>

@@ -592,8 +592,7 @@
                 <?php endif?>
                 <a href="index.php?page=logout">Quit</a>
             <?php else: ?>
-                <a href="index.php?page=login">Se connecter</a>
-                <a href="index.php?page=signUp" class="btn-signup">Créer un compte</a>
+                <a href="index.php?page=login" class="btn-signup">Se connecter</a>
             <?php endif ?>
         </nav>
     </header>

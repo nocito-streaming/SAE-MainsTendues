@@ -10,7 +10,6 @@
         :root {
             /* COULEURS PRINCIPALES */
             --primary-green: #2D6A4F;
-            --primary-green-f: #24c87f;
             --dark-green: #1D8348;      /* Sert aussi pour les hovers au lieu de --hover-green */
             --primary-blue: #2E86C1;
             --primary-red: #E5243B;   

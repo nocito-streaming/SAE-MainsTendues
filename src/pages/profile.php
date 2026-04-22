@@ -15,6 +15,7 @@ $information = getAllUserInfo($user_id);
 $formatedDate = dateformatter($information[0]['created_at']);
 $nbRequests = getNumberHelpRequestsByUser($user_id);
 $nbHelp = getNumberCompletedRequestsByUser($user_id);
+$adr_info = getUserAddress($user_id);
 ?>
 
 
@@ -92,28 +93,30 @@ $nbHelp = getNumberCompletedRequestsByUser($user_id);
                     <div class="info-item">
                         <div class="info-labels">
                             <div class="info-label"><i class="fas fa-phone"></i> Numéro de téléphone</div>
-                            <div class="info-value"><?php echo $information[0]['tel']?></div>
+                            <div class="info-value" id="tel-text"><?php echo $information[0]['tel']?></div>
                         </div>
-                        <button type="submit" class="btn-change" title="Supprimer"><i class="fas fa-pen"></i></button>
+                        <a type="button" class="btn-change" id="edit-btn" title="Modifier">
+                            <i class="fas fa-pen"></i>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="profile-card">
                     <div class="card-header-profile">
-                        <h4> Lieu de résidence<?php echo $information[0]['idAdr'] ?></h4>
+                        <h4> Lieu de résidence</h4>
                     </div>
-                    <?php if($information[0]['idAdr'] == 1){ ?>
+                    <?php if($adr_info['idAdr'] == 1){ ?>
                     <p>Vous n'avez pas encore saisis address</p>
-                    <button class = "SCKMYCKC"> Ajouter maintenant!</button>>
+                    <a class = "add-address" href = "index.php?page=userParam&view=user_info"> Ajouter maintenant!</a>
                      <?php } else {?>
                     <div class="info-list">
                         <div class="info-item">
                             <div class="info-label"><i class="fas fa-home"></i> Domicile</div>
                             <div class="info-value">
-                                <?php echo $information[0]['homeN'] . " " . $information[0]['street']?><br>
-                                    <?php echo $information[0]['postalCode'] . " ". $information[0]['city'];
-                }?>
+                                <?php echo $adr_info['homeN'] . " " . $adr_info['street']?><br>
+                                <?php echo $adr_info['postalCode'] . " ". $adr_info['city'];
+                    }?>
                         </div>
                     </div>
                 </div>

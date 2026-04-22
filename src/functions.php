@@ -18,6 +18,41 @@ function addHelpRequest($hType, $content, $urgency, $user_id, $idAdr): true|stri
         return "Erreur lors de l'enregistrement : " . $e->getMessage();
     }
 }
+function change_password($user_id, $old_password, $new_password): true
+{
+    global $db;
+    try {
+        $stmt = $db->prepare("SELECT pwdHash FROM User WHERE user_id = :user_id");
+        $stmt->execute([
+            "user_id" => $user_id]);
+        $user = $stmt->fetch();
+        if ($user && password_verify($old_password, $user['pwdHash'])) {
+            $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $stmt = $db->prepare("UPDATE User SET pwdHash = :new_pwdHash WHERE user_id = :user_id");
+            $stmt->execute([
+                "new_pwdHash" => $new_hashed_password,
+                "user_id" => $user_id
+            ]);
+            return true;
+        }
+    }catch (Exception $e){
+        return "Erreur lors de l'enregistrement : " . $e->getMessage();}
+}
+function getUserInfoToChange($user_id) : array|string {
+    global $db;
+    try{
+        $stmt = $db->prepare('SELECT * FROM User 
+                                NATURAL JOIN defUser 
+                                NATURAL JOIN Address 
+                                WHERE user_id = :user_id');
+        $stmt->execute([
+            "user_id" => $user_id
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e){
+        return "Erreur lors de recuperation des donnees : " . $e->getMessage();
+    }
+}
 function addAddress($city, $postal_code, $street, $homeN): true|string
 {
     global $db;
@@ -40,6 +75,21 @@ function require_admin(): void
     if (!is_logged_in() || !isset($_SESSION["is_admin"]) || $_SESSION["is_admin"] !== true) {
         header("Location: index.php?page=login");
         exit;
+    }
+}
+function getUserAddress($userId): array|string
+{
+    try{
+    global $db;
+    $stmt = $db->prepare("SELECT Address.* FROM defUser 
+                                JOIN Address ON defUser.idAdr = Address.idAdr
+                                WHERE defUser.user_id = :id");
+    $stmt->execute([
+        "id" => $userId
+    ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return "Erreur lors de l'enregistrement : " . $e->getMessage();
     }
 }
 function getAllUserInfo($userId): array|string

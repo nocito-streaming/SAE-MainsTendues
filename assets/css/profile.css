@@ -84,21 +84,22 @@ body {
 }
 
 .add-address {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: var(--primary-green);
-    color: var(--white);
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(40, 180, 99, 0.3);
-    transition: 0.3s;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+    background: var(--white);
+    color: var(--primary-green);
+    border: 2px solid var(--primary-green);
 }
 
 .edit-avatar-btn:hover {

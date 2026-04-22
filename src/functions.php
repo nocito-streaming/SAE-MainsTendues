@@ -189,15 +189,51 @@ function deleteHelpRequest($helpRequestId) {
     }
 }
 
+function sendVerificationCode($email, $code): bool {
+    $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d'; 
+    
+    $htmlContent = "
+    <div style='font-family: sans-serif; text-align: center; padding: 20px;'>
+        <h2>Vérification de votre compte</h2>
+        <p>Merci de vous être inscrit sur Mains Tendues. Voici votre code de validation :</p>
+        <h1 style='letter-spacing: 5px; color: #2563eb;'>$code</h1>
+        <p>Ce code expire bientôt. Si vous n'êtes pas à l'origine de cette demande, ignorez cet email.</p>
+    </div>";
+
+    $emailData = [
+        'from'    => 'Mains Tendues <onboarding@resend.dev>',
+        'to'      => [$email],
+        'subject' => $code . ' est votre code de vérification',
+        'html'    => $htmlContent
+    ];
+
+    $ch = curl_init('https://api.resend.com/emails');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($emailData),
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . $apiKey,
+            'Content-Type: application/json'
+        ],
+        CURLOPT_PROXY => 'http://cache.univ-pau.fr:3128'
+    ]);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    
+    return ($httpCode == 200 || $httpCode == 201);
+}
+
+
 function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName): bool{
-    // TODO: Placer cette clé dans un fichier .env avant la mise en production
     $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d';
     
     $safeMessage = nl2br(htmlspecialchars($FirstMessage));
     $safeTitle = htmlspecialchars($req_title);
     $safeName = htmlspecialchars($req_firstName);
 
-    // Construction de l'email HTML "Anti-Spam"
     $htmlContent = '
     <div style="font-family: Arial, sans-serif; color: #333333; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
         <p>Bonjour <strong>' . $safeName . '</strong>,</p>

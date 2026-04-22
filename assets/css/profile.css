@@ -83,6 +83,24 @@ body {
     transition: 0.3s;
 }
 
+.add-address {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--primary-green);
+    color: var(--white);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(40, 180, 99, 0.3);
+    transition: 0.3s;
+}
+
 .edit-avatar-btn:hover {
     background: var(--dark-green);
     transform: scale(1.1);

@@ -29,7 +29,7 @@ $filepath = $dirPages . $page . '.php';
 
 // Structure de chaque page
 
-// Le Header
+// Le super Header
 if (file_exists('./src/commons/header.php')) {
     include './src/commons/header.php';
 }

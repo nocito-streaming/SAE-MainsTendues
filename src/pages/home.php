@@ -1,4 +1,18 @@
 <main>
+    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1e293b; color: white; padding: 15px 20px; text-align: center; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <p style="margin: 0; font-size: 14px;">Ce site utilise des cookies de session strictement nécessaires pour vous permettre de rester connecté. En continuant votre navigation, vous acceptez leur utilisation.</p>
+        <button onclick="acceptCookies()" style="background-color: #28B463; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">J'ai compris</button>
+    </div>
+
+    <script>
+        if(localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+    </script>
     <section class="heroAccueil">  
         <div class="hero-content">
             <h1>MainsTendues</h1>
@@ -122,11 +136,16 @@
         </div>
     </section>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <h3>MainsTendues</h3>
+    <footer class="main-footer" style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 40px 0;">
+        <div class="footer-content" style="max-width: 1200px; margin: 0 auto; text-align: center; color: #64748b;">
+            <h3 style="color: #1e293b; margin-bottom: 10px;">MainsTendues</h3>
             <p>Main dans la main, pour un meilleur demain</p>
-            <p class="footer-sub">&copy; 2026 MainsTendues - Plateforme de solidarité et d'entraide inclusive.</p>
+            
+            <div style="margin: 20px 0;">
+                <a href="index.php?page=politique" style="color: #28B463; text-decoration: none; font-weight: 500;">Politique de Confidentialité (RGPD)</a>
+            </div>
+            
+            <p class="footer-sub" style="font-size: 13px; margin-top: 20px;">2026 MainsTendues - Plateforme de solidarité et d'entraide inclusive. Projet étudiant SAE.</p>
         </div>
     </footer>
 </main>

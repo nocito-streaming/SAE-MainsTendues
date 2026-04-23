@@ -1,4 +1,5 @@
 <main>
+<<<<<<< HEAD
     <div id="cookie-banner">
         <p>Ce site utilise des cookies de session strictement nécessaires pour vous permettre de rester connecté. En continuant votre navigation, vous acceptez leur utilisation.</p>
         <button onclick="acceptCookies()">J'ai compris</button>
@@ -44,15 +45,102 @@
         #cookie-banner button:hover {
             background-color: #219150;
         }
+=======
+    <div class="wrapper">
+        <img src="./assets/images/cookie.png" alt="">
+        <div class="content">
+        <header>Cookies</header>
+        <p>Ce site utilise des cookies pour vous garantir la meilleure expérience sur notre site.</p>
+        <div class="buttons">
+            <button class="item">D'accord</button>
+            <a href="index.php?page=politique" class="item">Apprendre plus</a>
+        </div>
+        </div>
+    </div>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    }
+    .wrapper{
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    max-width: 365px;
+    background: #fff;
+    padding: 25px 25px 30px 25px;
+    border-radius: 15px;
+    box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.15);
+    text-align: center;
+    }
+    .wrapper.hide{
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    }
+    ::selection{
+    color: #fff;
+    background: #FCBA7F;
+    }
+    .wrapper img{
+    max-width: 90px;
+    }
+    .content header{
+    font-size: 25px;
+    font-weight: 600;
+    }
+    .content{
+    margin-top: 10px;
+    }
+    .content p{
+    color: #858585;
+    margin: 5px 0 20px 0;
+    }
+    .content .buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .buttons button{
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    background: #FCBA7F;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    }
+    .buttons button:hover{
+    transform: scale(0.97);
+    }
+    .buttons .item{
+    margin: 0 10px;
+    }
+    .buttons a{
+    color: #FCBA7F;
+    }
+>>>>>>> ca88970549540f7a4c1e5c2e20d29ac2c23bb76d
     </style>
     <script>
-        if(localStorage.getItem('cookiesAccepted')) {
-            document.getElementById('cookie-banner').style.display = 'none';
+        const cookieBox = document.querySelector(".wrapper"),
+        acceptBtn = cookieBox.querySelector("button");
+        acceptBtn.onclick = ()=>{
+        document.cookie = "CookieBy=Gabin; max-age="+60*60*24*30;
+        if(document.cookie){
+            cookieBox.classList.add("hide");
+        }else{ 
+            alert("Le cookie ne peut pas être défini ! Veuillez débloquer ce site du paramétrage des cookies de votre navigateur.");
         }
-        function acceptCookies() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            document.getElementById('cookie-banner').style.display = 'none';
         }
+        let checkCookie = document.cookie.indexOf("CookieBy=Gabin");
+        checkCookie != -1 ? cookieBox.classList.add("hide") : cookieBox.classList.remove("hide");
     </script>
     <section class="heroAccueil">  
         <div class="hero-content">
@@ -177,11 +265,9 @@
         </div>
     </section>
 
-    <footer class="main-footer" style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 40px 0;">
+    <footer class="main-footer" style="background-color: #1e293b; border-top: 1px solid #1e293b; padding: 40px 0;">
         <div class="footer-content" style="max-width: 1200px; margin: 0 auto; text-align: center; color: #64748b;">
-            <h3 style="color: #1e293b; margin-bottom: 10px;">MainsTendues</h3>
-            <p>Main dans la main, pour un meilleur demain</p>
-            
+            <h3 style="color: #fff; margin-bottom: 10px;">MainsTendues</h3>
             <div style="margin: 20px 0;">
                 <a href="index.php?page=politique" style="color: #28B463; text-decoration: none; font-weight: 500;">Politique de Confidentialité (RGPD)</a>
             </div>

@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['icon_url'])) {
         <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
         <style>
-            body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; display: flex; justify-content: center; padding: 50px; }
+            body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
             .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; width: 400px; }
             .success { color: #2d6a4f; background: #dcfce7; padding: 10px; border-radius: 5px; }
             .error { color: #e5243b; background: #fee2e2; padding: 10px; border-radius: 5px; }

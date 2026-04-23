@@ -1,51 +1,4 @@
 <main>
-<<<<<<< HEAD
-    <div id="cookie-banner">
-        <p>Ce site utilise des cookies de session strictement nécessaires pour vous permettre de rester connecté. En continuant votre navigation, vous acceptez leur utilisation.</p>
-        <button onclick="acceptCookies()">J'ai compris</button>
-    </div>
-    <style>
-            #cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1e293b;
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
-            z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            
-            /* Flexbox pour l'alignement */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        #cookie-banner p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        #cookie-banner button {
-            background-color: #28B463;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        /* Petit bonus : un effet de survol pour le bouton */
-        #cookie-banner button:hover {
-            background-color: #219150;
-        }
-=======
     <div class="wrapper">
         <img src="./assets/images/cookie.png" alt="">
         <div class="content">
@@ -58,13 +11,6 @@
         </div>
     </div>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-    *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    }
     .wrapper{
     position: absolute;
     bottom: 30px;
@@ -126,7 +72,6 @@
     .buttons a{
     color: #FCBA7F;
     }
->>>>>>> ca88970549540f7a4c1e5c2e20d29ac2c23bb76d
     </style>
     <script>
         const cookieBox = document.querySelector(".wrapper"),

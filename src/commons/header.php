@@ -7,6 +7,8 @@
     <link rel="icon" type="image/webp" href="/assets/images/LogoMainsTendues.webp">
     <title>Plateforme d'Entraide</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
         :root {
             /* COULEURS PRINCIPALES */
             --primary-green: #2D6A4F;
@@ -51,6 +53,7 @@
             padding: 0; 
             box-sizing: border-box;
         }
+
 
         html {
             scroll-behavior: smooth;
@@ -104,7 +107,9 @@
             color: #666;
         }
 
+
         header nav a {
+            font-family: 'Poppins', sans-serif;
             text-decoration: none;
             color:  #2c3e50;
             margin-left: 20px;
@@ -168,10 +173,7 @@
                 left: 0; 
             }
 
-            header nav a {
-                margin: 15px 0;
-                display: block;
-            }
+
 
             .btn-signup {
                 display: inline-block;

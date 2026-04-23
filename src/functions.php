@@ -201,14 +201,14 @@ function sendVerificationCode($email, $code): bool {
     </div>";
 
     $emailData = [
-        'from'    => 'Mains Tendues <onboarding@resend.dev>',
+        'from'    => 'Mains Tendues <contact@mains-tendues.fr>',
         'to'      => [$email],
         'subject' => $code . ' est votre code de vérification',
         'html'    => $htmlContent
     ];
 
     $ch = curl_init('https://api.resend.com/emails');
-    curl_setopt_array($ch, [
+    $options = array(
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST           => true,
         CURLOPT_POSTFIELDS     => json_encode($emailData),
@@ -216,8 +216,12 @@ function sendVerificationCode($email, $code): bool {
             'Authorization: Bearer ' . $apiKey,
             'Content-Type: application/json'
         ],
-        CURLOPT_PROXY => 'http://cache.univ-pau.fr:3128'
-    ]);
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT        => 15,
+    );
+    curl_setopt_array($ch, $options);
+    
+    curl_setopt($ch, CURLOPT_PROXY, 'http://cache.univ-pau.fr:3128');
     
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -263,9 +267,9 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName
     </div>';
 
     $emailData = [
-        'from'    => 'Mains Tendues <contact@mains-tendues.fr>', // Ajout du nom de l'expéditeur
+        'from'    => 'Mains Tendues <contact@mains-tendues.fr>',
         'to'      => [$email],
-        'subject' => 'Quelqu\'un propose de vous aider pour : ' . $safeTitle, // Objet plus naturel
+        'subject' => 'Quelqu\'un propose de vous aider pour : ' . $safeTitle,
         'html'    => $htmlContent
     ];
 

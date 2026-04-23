@@ -38,14 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['icon_url'])) {
 
 <div>
         <title>MainsTendues - Update Icon</title>
-
         <script>
             UPLOADCARE_PUBLIC_KEY = '93c13b761ea513e8eb80';
             UPLOADCARE_TABS = 'file url camera';
             UPLOADCARE_LOCALE = 'en';
         </script>
         <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-
         <style>
             body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; display: flex; justify-content: center; }
             .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; width: 400px; }
@@ -69,23 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['icon_url'])) {
         </style>
     </head>
     <div>
-
     <div class="card">
         <h2>Update Profile Icon</h2>
         <p style="color: #64748b; margin-bottom: 20px;">Upload a photo, then click Save.</p>
-
         <?php  echo $message; ?>
-
         <form action="" method="POST">
-
             <input type="hidden"
                    role="uploadcare-uploader"
                    name="icon_url"
                    data-crop="1:1"
                    data-images-only="true">
-
             <br>
-
             <button type="submit" class="save-btn">Save to Profile</button>
         </form>
     </div>
@@ -97,6 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['icon_url'])) {
 
 
 
+
+
+
+    
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/profile.css">

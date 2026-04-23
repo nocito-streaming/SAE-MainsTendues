@@ -11,15 +11,24 @@ $view = $_GET['view'] ?? 'user_info';
 switch ($view) {
     case 'user_info': ?>
     <!-- Code pour afficher les informations de l'utilisateur et changer information de l'utilisateur -->
-        <p>Email: <?php echo $user_info_array['email']?></p>
-        <p>Telephone: <?php echo $user_info_array['tel']?></p>
-        <p>Prenom: <?php echo $user_info_array['fName']?></p>
-        <p>Nom: <?php echo $user_info_array['sName']?></p>
-        <p>Ville: <?php echo $user_info_array['city']?></p>
-        <p>Code postal: <?php echo $user_info_array['postalCode']?></p>
-        <p>Numero de la rue: <?php echo $user_info_array['street']?></p>
-        <p>Numero de maison :<?php echo $user_info_array['homeN']?></p>
-        <p>Mot de passe: ************</p>
+        <label>Email:</label> 
+        <input type="text" name="email" value="<?php echo $user_info_array['email']?>">
+        <label>Telephone:</label>
+        <input type="text" name="tel" value="<?php echo $user_info_array['tel']?>">
+        <label>Prenom:</label>
+        <input type="text" name="fName" value="<?php echo $user_info_array['fName']?>">
+        <label>Nom:</label>
+        <input type="text" name="sName" value="<?php echo $user_info_array['sName']?>">
+        <label>Ville:</label>
+        <input type="text" name="city" value="<?php echo $user_info_array['city']?>">
+        <label>Code postal:</label>
+        <input type="text" name="postalCode" value="<?php echo $user_info_array['postalCode']?>">
+        <label>Numero de la rue:</label>
+        <input type="text" name="street" value="<?php echo $user_info_array['street']?>">
+        <label>Numero de maison :</label>
+        <input type="text" name="homeN" value="<?php echo $user_info_array['homeN']?>">
+        <label>Mot de passe:</label>
+        <input type="text" name="mdp" value="************">
     <!-- FIN ICI -->
         <?php break;
     case 'settings':?>
@@ -38,6 +47,9 @@ switch ($view) {
         $view = 'user_info';
 }
 ?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="./assets/css/profile.css">
 
 <!--Les "buttons" a l'aide de lesquelles utilisateur choisis la category des parametres-->
 <ul class="nav-links">

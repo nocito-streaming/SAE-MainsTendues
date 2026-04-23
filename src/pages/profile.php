@@ -56,6 +56,12 @@ $adr_info = getUserAddress($user_id);
                 <a href="index.php?page=logout" class="btn-profile btn-danger">
                     <i class="fas fa-sign-out-alt"></i> Se déconnecter
                 </a>
+                <a href="index.php?page=userParam&view=delete_account" class="btn-profile btn-danger">  
+                    <?php
+                    $userId = $_SESSION['user_id'];
+                    deleteUser($_SESSION['user_id']);
+                    ?>
+                </a>
             </div>
         </div>
 

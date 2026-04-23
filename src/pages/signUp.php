@@ -21,10 +21,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = register_user($data['name'], $data['surname'], $data['email'], $data['pwd'], $data['tel']);
             
             if ($result === true) {
+
+                global $db;
+                $stmt = $db->prepare("SELECT user_id FROM User WHERE email = :email");
+                $stmt->execute(["email" => $data['email']]);
+                $user = $stmt->fetch();
+                
+                if ($user) {
+                    $_SESSION['user_id'] = $user['user_id'];
+                    $_SESSION['is_admin'] = false; 
+                }
+                
                 unset($_SESSION['temp_user']);
-                header("Location: index.php?page=login&success=account_created");
+                
+                header("Location: index.php?page=home"); 
                 exit;
-            } else {
+            }
+            else {
                 $error = "Erreur lors de la création du compte : " . $result;
                 $showVerification = true;
             }
@@ -168,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <div class="terms">
                             <input type="checkbox" id="terms" name="terms" required>
-                            <label for="terms">J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a>.</label>
+                            <label for="terms">J'accepte les <a href="index.php?page=politique">conditions d'utilisation</a> et la <a href="index.php?page=politique">politique de confidentialité</a>.</label>
                         </div>
 
                         <input type="submit" class="btn" value="Créer mon compte">

@@ -57,7 +57,7 @@ if ($idR) {
     die("Aucune annonce sélectionnée.");
 }
 
-// Traitement de la proposition d'aide (Envoi d'email via Resend)
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $FirstMessage = $_POST['firstMessage'];
     $email = $r['email']; 
@@ -67,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
     
     if ($result) {
-        // Redirection avec page de succès dynamique
         ?>
         <!DOCTYPE html>
         <html lang="fr">
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                 }
                 .success-icon-large {
                     font-size: 5rem;
-                    color: #3498db; /* Bleu pour l'envoi de message */
+                    color: #3498db;
                     margin-bottom: 20px;
                     animation: popIn 0.5s ease-out;
                 }

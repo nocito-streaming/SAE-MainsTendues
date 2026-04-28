@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
         $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
     }
     else {?>
-        <h1>Vous avez deja repondu a cette requette d'aide</h1><?php
+        <?php
     }
     if ($result){
         $InsertHelpAct = InsertHelpOffer($FirstMessage, $user_id, $idR);
@@ -145,7 +145,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     } else {
         echo "<div style='color:#cc0000; background:#ffcccc; padding:15px; border-radius: 5px; margin: 20px auto; max-width: 800px; text-align: center;'>";
         echo "<strong><i class='fas fa-exclamation-triangle'></i> Erreur d'envoi :</strong><br>";
-        echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
+        if ($checkpoint === true){
+            echo "Vous avez deja repondu a cette requette d'aide";
+        }
+        else {
+            echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
+        }
         echo "</div>";
     }
 }

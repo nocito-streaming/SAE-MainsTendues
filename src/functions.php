@@ -295,3 +295,32 @@ function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName
     
     return ($httpCode == 200 || $httpCode == 201);
 }
+function InsertHelpOffer($FirstMessage, $user_id, $idR)
+{
+    global $db ;
+    try {
+        $stmt = $db->prepare("INSERT INTO Help( volunteer_id, idR, firstMessage) 
+                                     VALUES (:volunteer_id, :idR, :firstMessage)");
+        $stmt->execute([
+            "volunteer_id" => $idR,
+            "idR" => $idR,
+            "firstMessage" => $FirstMessage
+        ]);
+        return true;
+    } catch (Exception $e) {
+        return "Erreur lors de l'enregistrement : " . $e->getMessage();
+    }
+}
+function CheckExistanceHelp($volunteer_id, $idR) : bool{
+    try {
+        global $db;
+        $stmt = $db->prepare("SELECT * FROM Help WHERE volunteer_id = :volunteer_id and idR = :idR");
+        $stmt->execute([
+            "volunteer_id" => $volunteer_id,
+            "idR" => $idR
+        ]);
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}

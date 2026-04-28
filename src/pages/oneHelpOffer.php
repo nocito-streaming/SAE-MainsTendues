@@ -14,12 +14,10 @@ require_once('./src/functions.php');
 
 $idR = $_GET['idR'] ?? null;
 
-// Récupération des données de l'annonce
 if ($idR) {
     try {
         global $db;
-        
-        // Jointure pour récupérer l'annonce, la ville associée et les infos du demandeur
+
         $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName, User.email 
                 FROM HelpRequests 
                 INNER JOIN Address ON HelpRequests.idAdr = Address.idAdr
@@ -35,8 +33,6 @@ if ($idR) {
         if (!$r) {
             die("Désolé, cette annonce n'existe plus.");
         }
-
-        // Formatage des variables pour la vue
         $req_title = $r['hType'] . " - " . $r['city'];
         if (isset($r['title'])) { 
             $req_title = $r['title']; 
@@ -63,8 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $email = $r['email']; 
     
     $req_firstName = explode(' ', $req_name)[0]; 
-    
-    $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
+    $checkpoint = CheckExistanceHelp($user_id, $idR);
+    $result = false;
+    if ($checkpoint === false) {
+        $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
+    }
+    else {?>
+        <h1>Vous avez deja repondu a cette requette d'aide</h1><?php
+    }
+    if ($result){
+        $InsertHelpAct = InsertHelpOffer($FirstMessage, $user_id, $idR);
+    }
     
     if ($result) {
         ?>
@@ -204,18 +209,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                     <i class="fas fa-handshake"></i>
                 </div>
                 
-                <?php if (!$user_id): ?>
+                <?php if (!$user_id){ ?>
                     <h3>Prêt à aider ?</h3>
                     <p class="action-desc">Vous devez être connecté à votre compte pour répondre à cette demande.</p>
                     <a href="index.php?page=login" class="btn-submit">Se connecter</a>
                     <a href="index.php?page=signUp" class="btn-outline" style="margin-top: 10px; text-align: center; display: block;">Créer un compte</a>
                 
-                <?php elseif ($req_status !== 'open'): ?>
+                <?php }elseif ($req_status !== 'open'){ ?>
                     <h3>Demande pourvue</h3>
                     <p class="action-desc">Cette demande d'aide a déjà été acceptée par un autre bénévole ou fermée par l'utilisateur.</p>
                     <button class="btn-submit" disabled style="background: #cbd5e1; cursor: not-allowed; box-shadow: none;">Action indisponible</button>
 
-                <?php else: ?>
+                <?php } else{
+                     ?>
                     <h3>Proposer mon aide</h3>
                     <p class="action-desc">Envoyez un petit message à <?php echo explode(' ', $req_name)[0]; ?> pour lui dire comment vous pouvez l'aider.</p>
                     
@@ -228,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                         </button>
                     </form>
                     <p class="security-note"><i class="fas fa-shield-alt"></i> Vos coordonnées ne seront partagées que si votre aide est acceptée.</p>
-                <?php endif; ?>
+               <?php } ?>
             </div>
         </div>
     </div>

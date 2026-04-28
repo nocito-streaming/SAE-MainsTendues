@@ -29,7 +29,6 @@ switch ($view) {
         <input type="text" name="homeN" value="<?php echo $user_info_array['homeN']?>">
         <label>Mot de passe:</label>
         <input type="text" name="mdp" value="************">
-    <!-- FIN ICI -->
         <?php break;
     case 'settings':?>
     <!-- Code pour afficher les informations de l'utilisateur et changer les differents parametres
@@ -41,7 +40,6 @@ switch ($view) {
                 <option>Non</option>
             </select>
         </div>
-    <!-- FIN ICI -->
         <?php break;
     default:
         $view = 'user_info';

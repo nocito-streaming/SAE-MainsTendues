@@ -47,7 +47,6 @@ $adr_info = getUserAddress($user_id);
 <link rel="stylesheet" href="./assets/css/profile.css">
 
 <style>
-    /* On cache le bouton par défaut d'Uploadcare, on garde juste sa fonctionnalité en JS */
     .uploadcare--widget {
         display: none !important; 
     }

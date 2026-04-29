@@ -1,9 +1,4 @@
 <?php
-/**
- * Détail d'une demande d'aide (oneHelpOffer).
- * Gère l'affichage dynamique de l'annonce et le traitement du formulaire de réponse via l'API Resend.
- */
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,7 +12,7 @@ $idR = $_GET['idR'] ?? null;
 if ($idR) {
     try {
         global $db;
-
+        
         $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName, User.email 
                 FROM HelpRequests 
                 INNER JOIN Address ON HelpRequests.idAdr = Address.idAdr
@@ -33,6 +28,7 @@ if ($idR) {
         if (!$r) {
             die("Désolé, cette annonce n'existe plus.");
         }
+
         $req_title = $r['hType'] . " - " . $r['city'];
         if (isset($r['title'])) { 
             $req_title = $r['title']; 
@@ -59,17 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $email = $r['email']; 
     
     $req_firstName = explode(' ', $req_name)[0]; 
-    $checkpoint = CheckExistanceHelp($user_id, $idR);
-    $result = false;
-    if ($checkpoint === false) {
-        $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
-    }
-    else {?>
-        <?php
-    }
-    if ($result){
-        $InsertHelpAct = InsertHelpOffer($FirstMessage, $user_id, $idR);
-    }
+    
+    $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
     
     if ($result) {
         ?>
@@ -145,12 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     } else {
         echo "<div style='color:#cc0000; background:#ffcccc; padding:15px; border-radius: 5px; margin: 20px auto; max-width: 800px; text-align: center;'>";
         echo "<strong><i class='fas fa-exclamation-triangle'></i> Erreur d'envoi :</strong><br>";
-        if ($checkpoint === true){
-            echo "Vous avez deja repondu a cette requette d'aide";
-        }
-        else {
-            echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
-        }
+        echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
         echo "</div>";
     }
 }
@@ -214,19 +196,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                     <i class="fas fa-handshake"></i>
                 </div>
                 
-                <?php if (!$user_id){ ?>
+                <?php if (!$user_id): ?>
                     <h3>Prêt à aider ?</h3>
                     <p class="action-desc">Vous devez être connecté à votre compte pour répondre à cette demande.</p>
                     <a href="index.php?page=login" class="btn-submit">Se connecter</a>
                     <a href="index.php?page=signUp" class="btn-outline" style="margin-top: 10px; text-align: center; display: block;">Créer un compte</a>
                 
-                <?php }elseif ($req_status !== 'open'){ ?>
+                <?php elseif ($req_status !== 'open'): ?>
                     <h3>Demande pourvue</h3>
                     <p class="action-desc">Cette demande d'aide a déjà été acceptée par un autre bénévole ou fermée par l'utilisateur.</p>
                     <button class="btn-submit" disabled style="background: #cbd5e1; cursor: not-allowed; box-shadow: none;">Action indisponible</button>
 
-                <?php } else{
-                     ?>
+                <?php else: ?>
                     <h3>Proposer mon aide</h3>
                     <p class="action-desc">Envoyez un petit message à <?php echo explode(' ', $req_name)[0]; ?> pour lui dire comment vous pouvez l'aider.</p>
                     
@@ -239,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                         </button>
                     </form>
                     <p class="security-note"><i class="fas fa-shield-alt"></i> Vos coordonnées ne seront partagées que si votre aide est acceptée.</p>
-               <?php } ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>

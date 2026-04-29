@@ -13,7 +13,7 @@ if ($idR) {
     try {
         global $db;
         
-        $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName, User.email 
+        $sql = "SELECT HelpRequests.*, Address.city, defUser.fName, defUser.sName, User.email, InNeed.user_id AS requester_id
                 FROM HelpRequests 
                 INNER JOIN Address ON HelpRequests.idAdr = Address.idAdr
                 INNER JOIN InNeed ON HelpRequests.inNeed_id = InNeed.user_id
@@ -41,6 +41,8 @@ if ($idR) {
         $req_city = $r['city'];
         $req_date = date('d/m/Y', strtotime($r['updated_at']));
         $req_status = $r['status']; 
+        
+        $req_requester_id = $r['requester_id'];
 
     } catch (PDOException $e) {
         die("Erreur BDD : " . $e->getMessage());
@@ -59,12 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
     
     if ($result) {
+        $_SESSION['pending_chat_message'] = $FirstMessage;
         ?>
         <!DOCTYPE html>
         <html lang="fr">
         <head>
             <meta charset="UTF-8">
-            <meta http-equiv="refresh" content="4;url=index.php?page=offerHelp">
+            <meta http-equiv="refresh" content="4;url=index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>">
             
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <style>
@@ -104,11 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                 </p>
                 
                 <div class="redirect-text">
-                    <i class="fas fa-spinner fa-spin"></i> Retour aux annonces dans <strong id="countdown">4</strong> secondes...
+                    <i class="fas fa-spinner fa-spin"></i> Ouverture de la messagerie dans <strong id="countdown">4</strong> secondes...
                 </div>
                 
-                <a href="index.php?page=offerHelp" class="btn-submit" style="display: inline-block; width: auto; margin-top: 25px; padding: 12px 30px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px;">
-                    Retourner aux annonces immédiatement
+                <a href="index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>" class="btn-submit" style="display: inline-block; width: auto; margin-top: 25px; padding: 12px 30px; background-color: var(--primary-color, #2E86C1); color: white; text-decoration: none; border-radius: 5px;">
+                    Ouvrir la discussion maintenant
                 </a>
             </div>
 

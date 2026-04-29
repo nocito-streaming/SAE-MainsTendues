@@ -209,7 +209,6 @@
             <a href="index.php?page=signUp" class="cta-button primary" style="display: inline-block; margin-top: 20px;">Créer mon compte gratuitement</a>
         </div>
     </section>
-
     <footer class="main-footer" style="background-color: #1e293b; border-top: 1px solid #1e293b; padding: 40px 0;">
         <div class="footer-content" style="max-width: 1200px; margin: 0 auto; text-align: center; color: #64748b;">
             <h3 style="color: #fff; margin-bottom: 10px;">MainsTendues</h3>

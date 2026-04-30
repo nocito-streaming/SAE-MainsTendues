@@ -184,6 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="Informatique">Informatique</option>
                     <option value="Autre">Autre (Précisez)</option>
                 </select>
+                <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
 
                 <label for="urgency" style="margin-top: 15px;">Quel est le degré d'urgence de votre demande ?</label>
                 <select name="urgency" id="urgency" required>
@@ -192,8 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="Moyen">Moyen</option>
                     <option value="Élevé">Élevé</option>
                 </select>
-
-                <input type="text" name="hType_other" id="hType_other" placeholder="Quel est ce type d'aide ?" style="display: none; margin-top: 10px;">
             </div>
             <div class="address-section" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e9ecef;">
                 <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 16px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">

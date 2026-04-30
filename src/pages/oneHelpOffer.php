@@ -51,96 +51,113 @@ if ($idR) {
     die("Aucune annonce sélectionnée.");
 }
 
+// Vérifier si l'utilisateur a déjà répondu à cette annonce pour l'affichage du formulaire
+$has_already_replied = false;
+if ($user_id) {
+    $has_already_replied = CheckExistanceHelp($user_id, $idR);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
-    $FirstMessage = $_POST['firstMessage'];
-    $email = $r['email']; 
     
-    $req_firstName = explode(' ', $req_name)[0]; 
-    
-    $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
-    
-    if ($result) {
-        $_SESSION['pending_chat_message'] = $FirstMessage;
-        ?>
-        <!DOCTYPE html>
-        <html lang="fr">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="refresh" content="4;url=index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>">
-            
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-            <style>
-                .success-page {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    min-height: 50vh;
-                    text-align: center;
-                    padding: 40px 20px;
-                }
-                .success-icon-large {
-                    font-size: 5rem;
-                    color: #3498db;
-                    margin-bottom: 20px;
-                    animation: popIn 0.5s ease-out;
-                }
-                .redirect-text {
-                    color: #7f8c8d;
-                    margin-top: 20px;
-                    font-size: 1.1rem;
-                }
-                @keyframes popIn {
-                    0% { transform: scale(0); opacity: 0; }
-                    80% { transform: scale(1.1); }
-                    100% { transform: scale(1); opacity: 1; }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="success-page">
-                <i class="fas fa-paper-plane success-icon-large"></i>
-                <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !</h2>
-                <p style="color: #34495e; font-size: 1.1rem; line-height: 1.5; max-width: 600px;">
-                    Merci pour votre solidarité ! Votre proposition a bien été transmise à <strong><?php echo htmlspecialchars($req_firstName); ?></strong>.
-                </p>
-                
-                <div class="redirect-text">
-                    <i class="fas fa-spinner fa-spin"></i> Ouverture de la messagerie dans <strong id="countdown">4</strong> secondes...
-                </div>
-                
-                <a href="index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>" class="btn-submit" style="display: inline-block; width: auto; margin-top: 25px; padding: 12px 30px; background-color: var(--primary-color, #2E86C1); color: white; text-decoration: none; border-radius: 5px;">
-                    Ouvrir la discussion maintenant
-                </a>
-            </div>
-
-            <script>
-                let seconds = 4;
-                const countdownElement = document.getElementById('countdown');
-                const interval = setInterval(function() {
-                    seconds--;
-                    if (seconds >= 0) {
-                        countdownElement.textContent = seconds;
-                    }
-                    if (seconds <= 0) {
-                        clearInterval(interval);
-                    }
-                }, 1000);
-            </script>
-        </body>
-        </html>
-        <?php
-        exit;
-    } else {
+    // Protection côté serveur pour empêcher la soumission multiple
+    if ($has_already_replied) {
         echo "<div style='color:#cc0000; background:#ffcccc; padding:15px; border-radius: 5px; margin: 20px auto; max-width: 800px; text-align: center;'>";
-        echo "<strong><i class='fas fa-exclamation-triangle'></i> Erreur d'envoi :</strong><br>";
-        echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
+        echo "<strong><i class='fas fa-exclamation-triangle'></i> Action impossible :</strong><br>";
+        echo "Vous avez déjà proposé votre aide pour cette demande.";
         echo "</div>";
+    } else {
+        $FirstMessage = $_POST['firstMessage'];
+        $email = $r['email']; 
+        
+        $req_firstName = explode(' ', $req_name)[0]; 
+        
+        // Enregistrer la proposition d'aide dans la base de données
+        InsertHelpOffer($FirstMessage, $user_id, $idR);
+        
+        // Envoyer l'email
+        $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
+        
+        if ($result) {
+            $_SESSION['pending_chat_message'] = $FirstMessage;
+            ?>
+            <!DOCTYPE html>
+            <html lang="fr">
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="refresh" content="4;url=index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>">
+                
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                <style>
+                    .success-page {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 50vh;
+                        text-align: center;
+                        padding: 40px 20px;
+                    }
+                    .success-icon-large {
+                        font-size: 5rem;
+                        color: #3498db;
+                        margin-bottom: 20px;
+                        animation: popIn 0.5s ease-out;
+                    }
+                    .redirect-text {
+                        color: #7f8c8d;
+                        margin-top: 20px;
+                        font-size: 1.1rem;
+                    }
+                    @keyframes popIn {
+                        0% { transform: scale(0); opacity: 0; }
+                        80% { transform: scale(1.1); }
+                        100% { transform: scale(1); opacity: 1; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="success-page">
+                    <i class="fas fa-paper-plane success-icon-large"></i>
+                    <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !</h2>
+                    <p style="color: #34495e; font-size: 1.1rem; line-height: 1.5; max-width: 600px;">
+                        Merci pour votre solidarité ! Votre proposition a bien été transmise à <strong><?php echo htmlspecialchars($req_firstName); ?></strong>.
+                    </p>
+                    
+                    <div class="redirect-text">
+                        <i class="fas fa-spinner fa-spin"></i> Ouverture de la messagerie dans <strong id="countdown">4</strong> secondes...
+                    </div>
+                    
+                    <a href="index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>" class="btn-submit" style="display: inline-block; width: auto; margin-top: 25px; padding: 12px 30px; background-color: var(--primary-color, #2E86C1); color: white; text-decoration: none; border-radius: 5px;">
+                        Ouvrir la discussion maintenant
+                    </a>
+                </div>
+
+                <script>
+                    let seconds = 4;
+                    const countdownElement = document.getElementById('countdown');
+                    const interval = setInterval(function() {
+                        seconds--;
+                        if (seconds >= 0) {
+                            countdownElement.textContent = seconds;
+                        }
+                        if (seconds <= 0) {
+                            clearInterval(interval);
+                        }
+                    }, 1000);
+                </script>
+            </body>
+            </html>
+            <?php
+            exit;
+        } else {
+            echo "<div style='color:#cc0000; background:#ffcccc; padding:15px; border-radius: 5px; margin: 20px auto; max-width: 800px; text-align: center;'>";
+            echo "<strong><i class='fas fa-exclamation-triangle'></i> Erreur d'envoi :</strong><br>";
+            echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
+            echo "</div>";
+        }
     }
 }
 ?>
-
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="assets/css/oneHelpOffer.css">
@@ -210,6 +227,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
                     <p class="action-desc">Cette demande d'aide a déjà été acceptée par un autre bénévole ou fermée par l'utilisateur.</p>
                     <button class="btn-submit" disabled style="background: #cbd5e1; cursor: not-allowed; box-shadow: none;">Action indisponible</button>
 
+                <?php elseif ($has_already_replied): ?>
+                    <h3>Aide déjà proposée</h3>
+                    <p class="action-desc">Vous avez déjà envoyé une proposition d'aide pour cette annonce. Vous pouvez continuer à discuter avec <?php echo explode(' ', $req_name)[0]; ?> dans votre messagerie.</p>
+                    <a href="index.php?page=inbox&dest_id=<?php echo htmlspecialchars($req_requester_id); ?>" class="btn-submit" style="background-color: #28B463;">Aller à la messagerie</a>
+                    
                 <?php else: ?>
                     <h3>Proposer mon aide</h3>
                     <p class="action-desc">Envoyez un petit message à <?php echo explode(' ', $req_name)[0]; ?> pour lui dire comment vous pouvez l'aider.</p>

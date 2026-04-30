@@ -1,43 +1,39 @@
 <?php
 require_once ('./src/db_config.php');
-
-
 $filterType = $_GET['hType'] ?? '';
 $filterCity = $_GET['city'] ?? '';
+$filterUrgency = $_GET['urgencyLevel'] ?? '';
 $cityParam = $filterCity ? "%$filterCity%" : '';
-$typeParam = $filterType ? : '';
-try{
-    global $db;
+$typeParam = $filterType ?: '';
+$urgencyParam = $filterUrgency ?: '';
 
+try {
+    global $db;
     $sql = "SELECT HelpRequests.*, Address.city
             FROM HelpRequests
             INNER JOIN Address ON HelpRequests.idADr = Address.idAdr
             ORDER BY
-                (CASE
-                    WHEN (Address.city LIKE :city AND :city_raw != '')
-                     AND (HelpRequests.hType = :hType AND :hType_raw != '') THEN 2
-                    WHEN (Address.city LIKE :city AND :city_raw != '')
-                      OR (HelpRequests.hType = :hType AND :hType_raw != '') THEN 1
-                    ELSE 0
-                END) DESC,
+                (
+                    (CASE WHEN Address.city LIKE :city AND :city_raw != '' THEN 1 ELSE 0 END) +
+                    (CASE WHEN HelpRequests.hType = :hType AND :hType_raw != '' THEN 1 ELSE 0 END) +
+                    (CASE WHEN HelpRequests.urgencyLevel = :urgency AND :urgency_raw != '' THEN 1 ELSE 0 END)
+                ) DESC,
                 updated_at DESC";
-
     $stmt = $db->prepare($sql);
     $stmt->execute([
-        'city' => $cityParam,
-        'city_raw' => $filterCity,
-        'hType' => $typeParam,
-        'hType_raw' => $filterType
+            'city' => $cityParam,
+            'city_raw' => $filterCity,
+            'hType' => $typeParam,
+            'hType_raw' => $filterType,
+            'urgency' => $urgencyParam,
+            'urgency_raw' => $filterUrgency
     ]);
     $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 } catch(PDOException $e){
-    echo "Error: " . $e -> getMessage();
+    echo "Error: " . $e->getMessage();
     $requests = [];
 }
 ?>
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="./assets/css/offerHelp.css">
 
@@ -72,7 +68,7 @@ try{
 
             <div class="input-group">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                <select name="hType">
+                <select name="urgencyLevel">
                     <option value="">Niveau d'urgence</option>
                     <option value="Faible" <?php if($filterType === 'Faible') echo 'selected'; ?>>Faible</option>
                     <option value="Moyen" <?php if($filterType === 'Moyen') echo 'selected'; ?>>Moyen</option>

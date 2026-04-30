@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
         <body>
             <div class="success-page">
                 <i class="fas fa-paper-plane success-icon-large"></i>
-                <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !<?php echo $checkpoint; echo $result; echo $InsertHelpAct;?></h2>
+                <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !</h2>
                 <p style="color: #34495e; font-size: 1.1rem; line-height: 1.5; max-width: 600px;">
                     Merci pour votre solidarité ! Votre proposition a bien été transmise à <strong><?php echo htmlspecialchars($req_firstName); ?></strong>.
                 </p>

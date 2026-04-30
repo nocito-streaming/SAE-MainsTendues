@@ -61,17 +61,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
     $req_firstName = explode(' ', $req_name)[0]; 
     $checkpoint = CheckExistanceHelp($user_id, $idR);
     $result = false;
+    $InsertHelpAct = false;
+
     if ($checkpoint === false) {
-        $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
+        $result = true;
     }
-    else {?>
-        <?php
-    }
-    if ($result){
+
+    if ($result === true) {
         $InsertHelpAct = InsertHelpOffer($FirstMessage, $user_id, $idR);
-    }
-    
-    if ($result) {
+        $result = sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName);
         ?>
         <!DOCTYPE html>
         <html lang="fr">
@@ -111,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
         <body>
             <div class="success-page">
                 <i class="fas fa-paper-plane success-icon-large"></i>
-                <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !</h2>
+                <h2 style="color: #2c3e50; margin-bottom: 15px;">Message envoyé avec succès !<?php echo $checkpoint; echo $result; echo $InsertHelpAct;?></h2>
                 <p style="color: #34495e; font-size: 1.1rem; line-height: 1.5; max-width: 600px;">
                     Merci pour votre solidarité ! Votre proposition a bien été transmise à <strong><?php echo htmlspecialchars($req_firstName); ?></strong>.
                 </p>
@@ -149,6 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['firstMessage'])) {
             echo "Vous avez deja repondu a cette requette d'aide";
         }
         else {
+            echo $result;
+            print_r($InsertHelpAct);
+            echo $checkpoint;
             echo "Une erreur est survenue lors de l'envoi de votre proposition d'aide. Veuillez réessayer plus tard.";
         }
         echo "</div>";

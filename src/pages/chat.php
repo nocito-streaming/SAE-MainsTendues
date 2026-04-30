@@ -1,7 +1,15 @@
 <?php
+require_once './src/functions.php';
+require_once './src/auth.php';
+require_once './src/db_config.php';
+global $db;
 
 $idR = $_GET['idR'] ?? null;
-
+try {
+}catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    exit;
+}
 ?>
 
 <html lang="en">

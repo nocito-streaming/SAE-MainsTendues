@@ -302,16 +302,16 @@ function InsertHelpOffer($FirstMessage, $user_id, $idR)
         $stmt = $db->prepare("INSERT INTO Help( volunteer_id, idR, firstMessage) 
                                      VALUES (:volunteer_id, :idR, :firstMessage)");
         $stmt->execute([
-            "volunteer_id" => $idR,
+            "volunteer_id" => $user_id,
             "idR" => $idR,
             "firstMessage" => $FirstMessage
         ]);
         return true;
     } catch (Exception $e) {
-        return "Erreur lors de l'enregistrement : " . $e->getMessage();
+        return false;
     }
 }
-function CheckExistanceHelp($volunteer_id, $idR) : bool{
+function CheckExistanceHelp($volunteer_id, $idR) {
     try {
         global $db;
         $stmt = $db->prepare("SELECT * FROM Help WHERE volunteer_id = :volunteer_id and idR = :idR");
@@ -319,7 +319,13 @@ function CheckExistanceHelp($volunteer_id, $idR) : bool{
             "volunteer_id" => $volunteer_id,
             "idR" => $idR
         ]);
-        return true;
+        $checkpoint = $stmt->fetchAll();
+        if (empty($checkpoint)) {
+            return false;
+        }
+        else{
+            return true;
+        }
     } catch (Exception $e) {
         return false;
     }

@@ -1,6 +1,6 @@
 <main>
     <div class="wrapper">
-        <img src="./assets/images/cookie.png" alt="">
+        <img src="./assets/images/cookie.png" alt="Illustration cookie" width="90" height="93" loading="lazy">
         <div class="content">
         <header>Cookies</header>
         <p>Ce site utilise des cookies pour vous garantir la meilleure expérience sur notre site.</p>
@@ -12,7 +12,8 @@
     </div>
     <style>
     .wrapper{
-    position: absolute;
+    z-index: 999;
+    position: fixed;
     bottom: 30px;
     left: 30px;
     max-width: 365px;
@@ -28,10 +29,6 @@
     transform: scale(0.8);
     transition: all 0.3s ease;
     }
-    ::selection{
-    color: #fff;
-    background: #FCBA7F;
-    }
     .wrapper img{
     max-width: 90px;
     }
@@ -43,8 +40,9 @@
     margin-top: 10px;
     }
     .content p{
-    color: #858585;
+    color: #555555;
     margin: 5px 0 20px 0;
+    line-height: 1.5;
     }
     .content .buttons{
     display: flex;
@@ -55,7 +53,7 @@
     padding: 10px 20px;
     border: none;
     outline: none;
-    color: #fff;
+    color: #1F2937;
     font-size: 16px;
     font-weight: 500;
     border-radius: 5px;
@@ -70,7 +68,9 @@
     margin: 0 10px;
     }
     .buttons a{
-    color: #FCBA7F;
+    color: #C25100;
+    font-weight: 600;
+    text-decoration: underline;
     }
     </style>
     <script>

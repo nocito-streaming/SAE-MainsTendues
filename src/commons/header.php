@@ -6,18 +6,20 @@
     <meta name="description" content="MainsTendues est la plateforme gratuite d'entraide locale. Demandez de l'aide pour vos courses et petits travaux ou devenez bénévole pour aider vos voisins.">
     <link rel="icon" type="image/webp" href="/assets/images/LogoMainsTendues.webp">
     <title>Plateforme d'Entraide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
         :root {
             /* COULEURS PRINCIPALES */
             --primary-green: #2D6A4F;
-            --dark-green: #1D8348;      /* Sert aussi pour les hovers au lieu de --hover-green */
+            --dark-green: #1D8348;    
             --primary-blue: #2E86C1;
             --primary-red: #E5243B;   
             --white: #ffffff;
 
-            /* TEXTES & FONDS (Neutres) */
+            /* TEXTES & FONDS */
             --text-dark: #0f172a;       /* Titres forts ET fond de la barre latérale Admin */
             --text-main: #1e293b;       /* Texte standard de lecture */
             --text-muted: #64748b;      /* Descriptions, sous-titres, dates, icônes */
@@ -28,10 +30,9 @@
 
             --border-color: #e2e8f0;    /* Unifie toutes les bordures claires (inputs, tableaux) */
 
-            /* ALERTES & BADGES */
             /* Succès */
             --success-bg: #dcfce7;
-            --success-text: #16a34a;    /* Sert aussi pour les bordures de succès */
+            --success-text: #16a34a;    /* bordures de succès */
             
             /* Erreur / Urgent (Utilise --primary-red pour le texte) */
             --error-bg: #fee2e2;        /* Unifie fond d'erreur ET badge rouge */

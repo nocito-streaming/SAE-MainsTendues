@@ -1,2 +1,11 @@
-# SAE-MainsTendues
-Git du groupe MainsTendues, projet de SAE du 2nd semestre. ISA NUM 1
+# MainsTendues - Plateforme web solidaire
+
+Ce projet a été développé par un groupe de trois étudiants dans le cadre de notre SAE du second semestre. MainsTendues est une plateforme web de mise en relation destinée à faciliter l'entraide. Notre objectif était de couvrir tout le cycle de vie du projet, de la modélisation de la base de données jusqu'au déploiement réseau, tout en respectant des contraintes techniques et légales strictes.
+
+L'hébergement du projet a représenté un défi réseau intéressant. Le serveur Apache tournait sur une machine Kali Linux connectée au réseau de notre université, ce qui nous empêchait d'ouvrir les ports vers l'extérieur. Pour contourner ce pare-feu, j'ai mis en place un tunnel Cloudflare. J'ai d'ailleurs dû reconfigurer le service pour forcer le trafic en TCP via HTTP/2, car le protocole UDP utilisé par défaut était bloqué par l'infrastructure universitaire.
+
+La délivrabilité des emails a été une autre problématique majeure. Les envois classiques en PHP finissaient systématiquement en spam. J'ai pris l'initiative d'intégrer l'API externe Resend en codant les appels directement avec la bibliothèque cURL, tout en gérant les délais d'attente pour protéger notre serveur des crashs. Pour que nos emails soient acceptés par des fournisseurs stricts comme Gmail, j'ai configuré les enregistrements de sécurité DNS de notre domaine, en mettant en place les normes SPF, DKIM et DMARC.
+
+Côté back-end, la sécurité des données a guidé nos choix. Nous avons utilisé MariaDB avec l'interface PDO et des requêtes systématiquement préparées pour éviter toute injection SQL. J'ai également développé un système de contrôle d'accès pour protéger notre espace d'administration. Afin de respecter le droit à l'oubli imposé par le RGPD, j'ai structuré la base de données avec des contraintes de suppression en cascade. La suppression d'un utilisateur entraîne ainsi l'effacement immédiat et définitif de toutes ses données et annonces liées.
+
+La collaboration technique a été essentielle pour aboutir à ce résultat. Nous avons planifié notre travail avec un diagramme de Gantt et géré notre code via Git avec un système de branches. Cette organisation nous a obligés à communiquer constamment, notamment pour résoudre des conflits de code sur nos fichiers principaux lors de sessions de vérification en équipe.

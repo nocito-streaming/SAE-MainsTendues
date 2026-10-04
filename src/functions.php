@@ -190,7 +190,7 @@ function deleteHelpRequest($helpRequestId) {
 }
 
 function sendVerificationCode($email, $code): bool {
-    $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d'; 
+    $apiKey = ''; 
     
     $htmlContent = "
     <div style='font-family: sans-serif; text-align: center; padding: 20px;'>
@@ -232,7 +232,7 @@ function sendVerificationCode($email, $code): bool {
 
 
 function sendEmailFirstMessage($FirstMessage, $email, $req_title, $req_firstName): bool{
-    $apiKey = 're_baXMsw6V_6We2nqRxoF31skj8sQABii7d';
+    $apiKey = '';
     
     $safeMessage = nl2br(htmlspecialchars($FirstMessage));
     $safeTitle = htmlspecialchars($req_title);
